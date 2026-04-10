@@ -32,4 +32,10 @@ export class AuthController {
   async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
     return this.authService.resetPassword(resetPasswordDto);
   }
+
+  @Post('check-email')
+  @HttpCode(HttpStatus.OK)
+  async checkEmail(@Body('email') email: string) {
+    return this.authService.checkEmail(email);
+  }
 }

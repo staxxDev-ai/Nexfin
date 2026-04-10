@@ -187,4 +187,13 @@ export class AuthService {
 
     return { message: 'Senha redefinida com sucesso. Agora você pode fazer login.' };
   }
+
+  async checkEmail(email: string) {
+    const user = await this.prisma.user.findUnique({
+      where: { email },
+      select: { id: true } // Apenas checagem mínima por performance
+    });
+    
+    return { exists: !!user };
+  }
 }
