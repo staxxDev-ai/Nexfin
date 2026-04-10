@@ -16,7 +16,22 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify(body),
     })
 
-    const data = await response.json()
+    const contentType = response.headers.get('content-type')
+    let data
+    
+    if (contentType && contentType.includes('application/json')) {
+      data = await response.json()
+    } else {
+      const text = await response.text()
+      console.error('[Proxy /auth/login] Resposta não-JSON recebida:', {
+        status: response.status,
+        text: text.substring(0, 500)
+      })
+      return NextResponse.json(
+        { message: `O backend no Railway retornou um erro (Status ${response.status}). Verifique os logs do Railway para detalhes.` },
+        { status: response.status }
+      )
+    }
 
     if (!response.ok) {
       return NextResponse.json(data, { status: response.status })
@@ -24,13 +39,12 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(data, { status: 200 })
   } catch (err: any) {
-    console.error('[Proxy /auth/login] Erro detalhado:', {
+    console.error('[Proxy /auth/login] Erro de rede:', {
       message: err.message,
-      code: err.code,
-      stack: err.stack
+      code: err.code
     })
     return NextResponse.json(
-      { message: `Erro de conexão: ${err.message}. Verifique se a URL ${process.env.API_URL || 'https://nexfin-production.up.railway.app'} está correta.` },
+      { message: `Falha na conexão com o Railway (${err.message}). O servidor pode estar offline ou o endereço está incorreto.` },
       { status: 503 }
     )
   }
