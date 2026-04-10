@@ -298,7 +298,7 @@ export default function LoginPage() {
                   </label>
                 </div>
 
-                <div style={{ marginTop: 24, pt: 16, borderTop: '1px solid rgba(255,255,255,0.05)', textAlign: 'center' }}>
+                <div style={{ marginTop: 24, paddingTop: 16, borderTop: '1px solid rgba(255,255,255,0.05)', textAlign: 'center' }}>
                   <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', margin: 0 }}>
                     Novo por aqui?{' '}
                     <Link href="/register" style={{ color: '#60a5fa', fontWeight: 600, textDecoration: 'none' }}>
