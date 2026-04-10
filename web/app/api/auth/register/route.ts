@@ -3,7 +3,13 @@ import { NextRequest, NextResponse } from 'next/server'
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1'
+
+    // Usa API_URL (server-side) ou NEXT_PUBLIC_API_URL, com fallback hardcoded para o Railway
+    const API = process.env.API_URL 
+      || process.env.NEXT_PUBLIC_API_URL 
+      || 'https://nexfin-production.up.railway.app/api/v1'
+
+    console.log('[Proxy /auth/register] Conectando em:', API)
 
     const response = await fetch(`${API}/auth/register`, {
       method: 'POST',
@@ -21,7 +27,7 @@ export async function POST(request: NextRequest) {
   } catch (err: any) {
     console.error('[Proxy /auth/register] Erro:', err.message)
     return NextResponse.json(
-      { message: 'Falha na conexão com o servidor. Tente novamente.' },
+      { message: 'Servidor indisponível. Verifique se o backend está online.' },
       { status: 503 }
     )
   }
