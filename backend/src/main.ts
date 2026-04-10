@@ -18,13 +18,21 @@ async function bootstrap() {
     disableErrorMessages: process.env.NODE_ENV === 'production',
   }));
 
-  app.enableCors({
-    origin: true, // Libera qualquer origem para teste de conexão
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
-    preflightContinue: false,
-    optionsSuccessStatus: 204,
+  // ── FORÇA BRUTA: Middleware manual de CORS para contornar bloqueios do framework ──
+  app.use((req, res, next) => {
+    const origin = req.headers.origin;
+    if (origin) {
+      res.header('Access-Control-Allow-Origin', origin);
+    }
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS,PATCH');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, Accept, Origin');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    
+    // Responde imediatamente ao preflight (OPTIONS)
+    if (req.method === 'OPTIONS') {
+      return res.sendStatus(204);
+    }
+    next();
   });
 
   // ── Prefixo global das rotas ──
@@ -33,7 +41,7 @@ async function bootstrap() {
   const port = process.env.PORT ?? 3001;
   await app.listen(port);
 
-  logger.log(`🚀 NEXFIN Backend v3.1 rodando em http://localhost:${port}/api/v1`);
+  logger.log(`🚀 NEXFIN Backend v4.0 (CORS UNLOCKED) rodando em port ${port}`);
   logger.log(`⚡ WebSocket Gateway em ws://localhost:3002/nexfin`);
   logger.log(`📅 Timezone: America/Sao_Paulo — ${new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}`);
 }
