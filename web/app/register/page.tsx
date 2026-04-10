@@ -25,6 +25,7 @@ export default function RegisterPage() {
   const [mounted,       setMounted]       = useState(false)
   const [remember,      setRemember]      = useState(false)
   const [showPassword,  setShowPassword]  = useState(false)
+  const [captchaToken,  setCaptchaToken]  = useState<string | null>(null)
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -60,44 +61,25 @@ export default function RegisterPage() {
       return
     }
 
-    setLoading(true)
-    console.log('Acionando reCAPTCHA invisível...');
-    
-    // Timeout de segurança para o reCAPTCHA (se ele não responder em 7s, cancela)
-    const captchaTimeout = setTimeout(() => {
-      if (loading) {
-        console.error('ERRO: Timeout do reCAPTCHA atingido.');
-        setLoading(false);
-        setErrors({ general: 'A verificação de segurança demorou demais. Tente atualizar a página.' });
-      }
-    }, 7000);
-
-    try {
-      if (recaptchaRef.current) {
-        recaptchaRef.current.execute();
-      } else {
-        throw new Error('Componente reCAPTCHA não encontrado.');
-      }
-    } catch (err: any) {
-      clearTimeout(captchaTimeout);
-      console.error('Erro ao executar reCAPTCHA:', err);
-      setLoading(false)
-      setErrors({ general: 'Falha ao iniciar verificação de segurança: ' + err.message })
-    }
-  }
-
-  const onReCaptchaChange = async (token: string | null) => {
-    console.log('Resposta do reCAPTCHA recebida. Token:', token ? 'OK' : 'FALHA');
-    
-    if (!token) {
-      setLoading(false)
-      setErrors({ general: 'Verificação de segurança falhou. Tente novamente.' })
+    if (!captchaToken) {
+      setErrors({ general: 'Por favor, complete a verificação (Não sou um robô).' })
       return
     }
 
+    setLoading(true)
+    console.log('Iniciando envio com token do captcha...');
+    await onReCaptchaChange(captchaToken);
+  }
+
+  const onReCaptchaChange = async (token: string | null) => {
+    setCaptchaToken(token);
+    if (!token) return;
+    
+    console.log('Token recebido. Chamando API...');
+
     try {
       const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1'
-      console.log('Chamando API:', API + '/auth/register');
+      console.log('Conectando em:', API);
       
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 15000);
@@ -111,13 +93,12 @@ export default function RegisterPage() {
 
       clearTimeout(timeoutId);
       const data = await response.json();
-      console.log('Resposta da API recebida. Status:', response.status);
 
       if (!response.ok) {
         throw new Error(data.message || `Erro no servidor (${response.status})`);
       }
 
-      console.log('Registro bem-sucedido! Redirecionando...');
+      console.log('Sucesso! Redirecionando...');
       localStorage.setItem('nexfin_auth', data.access_token)
       localStorage.setItem('nexfin_user', data.user.name)
 
@@ -128,13 +109,14 @@ export default function RegisterPage() {
       router.replace('/dashboard')
 
     } catch (err: any) {
-      console.error('Erro no fluxo de registro:', err);
+      console.error('Falha no envio:', err);
       if (err.name === 'AbortError') {
         setErrors({ general: 'O servidor demorou demais para responder.' })
       } else {
         setErrors({ general: `Falha na conexão: ${err.message}` })
       }
-      recaptchaRef.current?.reset()
+      recaptchaRef.current?.reset();
+      setCaptchaToken(null);
     } finally {
       setLoading(false)
     }
@@ -262,6 +244,16 @@ export default function RegisterPage() {
             </label>
           </div>
 
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 20 }}>
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              sitekey={RECAPTCHA_SITE_KEY}
+              size="normal"
+              theme="dark"
+              onChange={onReCaptchaChange}
+            />
+          </div>
+
           <button
             type="submit"
             disabled={loading}
@@ -271,7 +263,7 @@ export default function RegisterPage() {
               cursor: loading ? 'wait' : 'pointer', boxShadow: '0 8px 24px rgba(37,99,235,0.25)', transition: 'all 0.3s'
             }}
           >
-            {loading ? 'CRIANDO CONTA...' : 'CRIAR MINHA CONTA'}
+            {loading ? 'PROCESSANDO...' : 'CRIAR MINHA CONTA'}
           </button>
 
           <div style={{ textAlign: 'center', marginTop: 24 }}>
@@ -288,15 +280,6 @@ export default function RegisterPage() {
           SECURE ENROLLMENT - v1.0
         </div>
       </motion.div>
-
-      <ReCAPTCHA
-        ref={recaptchaRef}
-        sitekey={RECAPTCHA_SITE_KEY}
-        size="invisible"
-        badge="bottomright"
-        theme="dark"
-        onChange={onReCaptchaChange}
-      />
 
       <style jsx global>{`
         * { box-sizing: border-box; }
