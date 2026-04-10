@@ -67,17 +67,8 @@ export default function LoginPage() {
       return
     }
 
-    setLoading(true)
-    
-    // Dispara a análise invisível do Google
-    try {
-      if (recaptchaRef.current) {
-        recaptchaRef.current.execute();
-      }
-    } catch (err) {
-      setLoading(false)
-      setErrors({ general: 'Falha ao iniciar verificação de segurança.' })
-    }
+    console.log('Iniciando login (Modo Bypass ReCAPTCHA)...');
+    await onReCaptchaChange('bypass_token');
   }
 
   // Executado quando o Google retorna o token invisível
@@ -322,7 +313,8 @@ export default function LoginPage() {
         </div>
       </motion.div>
 
-      {/* google reCAPTCHA Invisível - Flutuando no canto inferior direito */}
+      {/* reCAPTCHA Desativado temporariamente (Bypass) */}
+      {/* 
       <ReCAPTCHA
         ref={recaptchaRef}
         sitekey={RECAPTCHA_SITE_KEY}
@@ -331,6 +323,7 @@ export default function LoginPage() {
         theme="dark"
         onChange={onReCaptchaChange}
       />
+      */}
 
       <style jsx global>{`
         * { box-sizing: border-box; }

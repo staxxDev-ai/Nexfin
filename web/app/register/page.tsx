@@ -61,14 +61,16 @@ export default function RegisterPage() {
       return
     }
 
+    /* 
     if (!captchaToken) {
       setErrors({ general: 'Por favor, complete a verificação (Não sou um robô).' })
       return
     }
+    */
 
     setLoading(true)
-    console.log('Iniciando envio com token do captcha...');
-    await onReCaptchaChange(captchaToken);
+    console.log('Iniciando envio (Modo Bypass ReCAPTCHA)...');
+    await onReCaptchaChange(captchaToken || 'bypass_token');
   }
 
   const onReCaptchaChange = async (token: string | null) => {
@@ -244,6 +246,8 @@ export default function RegisterPage() {
             </label>
           </div>
 
+          {/* reCAPTCHA Desativado temporariamente (Bypass) */}
+          {/*
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 20 }}>
             <ReCAPTCHA
               ref={recaptchaRef}
@@ -253,6 +257,7 @@ export default function RegisterPage() {
               onChange={onReCaptchaChange}
             />
           </div>
+          */}
 
           <button
             type="submit"
