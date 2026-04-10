@@ -254,7 +254,7 @@ export default function DashboardPage() {
                   fontSize: 28, 
                   fontWeight: 800, 
                   color: '#fff',
-                  filter: isPrivate ? 'blur(8px)' : 'none',
+                  filter: isPrivate ? 'blur(5px)' : 'none',
                   transition: 'filter 0.3s ease'
                 }}>
                   {balance.value}
@@ -300,7 +300,7 @@ export default function DashboardPage() {
                     </div>
                     <div style={{ 
                       fontSize: 20, fontWeight: 800, color: '#fff',
-                      filter: isPrivate ? 'blur(8px)' : 'none'
+                      filter: isPrivate ? 'blur(5px)' : 'none'
                     }}>
                       {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: acc.currency }).format(acc.balance)}
                     </div>

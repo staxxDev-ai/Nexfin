@@ -18,6 +18,7 @@ import {
   Loader2
 } from 'lucide-react'
 import { useSocket } from '@/context/SocketContext'
+import { usePrivacy } from '@/context/PrivacyContext'
 
 const MONTHS = ['JANEIRO', 'FEVEREIRO', 'MARÇO', 'ABRIL', 'MAIO', 'JUNHO', 'JULHO', 'AGOSTO', 'SETEMBRO', 'OUTUBRO', 'NOVEMBRO', 'DEZEMBRO']
 
@@ -39,6 +40,7 @@ export default function HistoryPage() {
   const [endDate, setEndDate] = useState('')
   const [isCustomDateActive, setIsCustomDateActive] = useState(false)
   const { socket } = useSocket()
+  const { isPrivate } = usePrivacy()
 
   // Busca de Dados Reais
   useEffect(() => {
@@ -433,7 +435,9 @@ export default function HistoryPage() {
                   <td style={{ padding: '20px', textAlign: 'right' }}>
                     <div style={{ 
                       fontSize: 15, fontWeight: 700, 
-                      color: t.amount > 0 ? '#22c55e' : '#fff' 
+                      color: t.amount > 0 ? '#22c55e' : '#fff',
+                      filter: isPrivate ? 'blur(5px)' : 'none',
+                      transition: 'filter 0.3s ease'
                     }}>
                       {t.amount > 0 ? `+ ` : `- `}
                       {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: t.currency || 'BRL' }).format(Math.abs(t.amount))}

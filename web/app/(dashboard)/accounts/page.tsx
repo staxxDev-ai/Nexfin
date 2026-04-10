@@ -156,7 +156,7 @@ function InstitutionCard({
                 fontSize: 16, 
                 fontWeight: 700, 
                 color: acc.balance >= 0 ? '#fff' : '#ef4444',
-                filter: isPrivate ? 'blur(8px)' : 'none',
+                filter: isPrivate ? 'blur(5px)' : 'none',
                 transition: 'filter 0.3s ease'
               }}>
                 {formattedValue}
@@ -183,7 +183,7 @@ function InstitutionCard({
               fontWeight: 900, 
               color: totalBalance >= 0 ? '#22c55e' : '#ef4444', 
               letterSpacing: '-0.02em',
-              filter: isPrivate ? 'blur(8px)' : 'none',
+              filter: isPrivate ? 'blur(5px)' : 'none',
               transition: 'filter 0.3s ease'
             }}>
               {formattedTotal}
