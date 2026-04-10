@@ -10,11 +10,22 @@ export async function POST(request: NextRequest) {
 
     console.log('[Proxy /auth/login] Conectando em:', API)
 
-    const response = await fetch(`${API}/auth/login`, {
+    let response = await fetch(`${API}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     })
+
+    // Se der 404 com o prefixo, tenta sem o prefixo (fallback de produção)
+    if (response.status === 404 && API.includes('/api/v1')) {
+      const fallbackAPI = API.replace('/api/v1', '')
+      console.log('[Proxy /auth/login] 404 detectado. Tentando fallback sem prefixo:', fallbackAPI)
+      response = await fetch(`${fallbackAPI}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      })
+    }
 
     const contentType = response.headers.get('content-type')
     let data
@@ -28,7 +39,7 @@ export async function POST(request: NextRequest) {
         text: text.substring(0, 500)
       })
       return NextResponse.json(
-        { message: `O backend no Railway retornou um erro (Status ${response.status}). Verifique os logs do Railway para detalhes.` },
+        { message: `O backend no Railway retornou um erro (Status ${response.status}). Verifique os logs do Railway.` },
         { status: response.status }
       )
     }
@@ -44,7 +55,7 @@ export async function POST(request: NextRequest) {
       code: err.code
     })
     return NextResponse.json(
-      { message: `Falha na conexão com o Railway (${err.message}). O servidor pode estar offline ou o endereço está incorreto.` },
+      { message: `Falha na conexão com o Railway (${err.message}). Verifique o status do serviço.` },
       { status: 503 }
     )
   }

@@ -10,11 +10,22 @@ export async function POST(request: NextRequest) {
 
     console.log('[Proxy /auth/register] Conectando em:', API)
 
-    const response = await fetch(`${API}/auth/register`, {
+    let response = await fetch(`${API}/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     })
+
+    // Se der 404 com o prefixo, tenta sem o prefixo (fallback de produção)
+    if (response.status === 404 && API.includes('/api/v1')) {
+      const fallbackAPI = API.replace('/api/v1', '')
+      console.log('[Proxy /auth/register] 404 detectado. Tentando fallback sem prefixo:', fallbackAPI)
+      response = await fetch(`${fallbackAPI}/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      })
+    }
 
     const contentType = response.headers.get('content-type')
     let data
