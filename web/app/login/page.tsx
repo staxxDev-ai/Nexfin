@@ -23,6 +23,7 @@ export default function LoginPage() {
   const [errors,         setErrors]         = useState<FieldError>({})
   const [loading,        setLoading]        = useState(false)
   const [mounted,        setMounted]        = useState(false)
+  const [remember,       setRemember]       = useState(false)
 
   // Monta animação inicial ao carregar a página
   useEffect(() => {
@@ -33,8 +34,9 @@ export default function LoginPage() {
       }
       
       const savedEmail = localStorage.getItem('nexfin_saved_email');
-      const remember = localStorage.getItem('nexfin_remember') === 'true';
-      if (remember && savedEmail) {
+      const rememberStatus = localStorage.getItem('nexfin_remember') === 'true';
+      setRemember(rememberStatus);
+      if (rememberStatus && savedEmail) {
         setEmail(savedEmail);
       }
     }
@@ -100,7 +102,7 @@ export default function LoginPage() {
       localStorage.setItem('nexfin_auth', data.access_token)
       localStorage.setItem('nexfin_user', data.user.name)
 
-      if (localStorage.getItem('nexfin_remember') === 'true') {
+      if (remember) {
         localStorage.setItem('nexfin_saved_email', email);
       }
       
@@ -286,10 +288,12 @@ export default function LoginPage() {
                   <input 
                     type="checkbox" 
                     id="remember" 
-                    checked={localStorage.getItem('nexfin_remember') === 'true'}
+                    checked={remember}
                     onChange={(e) => {
-                      localStorage.setItem('nexfin_remember', e.target.checked.toString());
-                      if (!e.target.checked) localStorage.removeItem('nexfin_saved_email');
+                      const isChecked = e.target.checked;
+                      setRemember(isChecked);
+                      localStorage.setItem('nexfin_remember', isChecked.toString());
+                      if (!isChecked) localStorage.removeItem('nexfin_saved_email');
                     }}
                     style={{ width: 16, height: 16, cursor: 'pointer', accentColor: '#2563eb' }}
                   />

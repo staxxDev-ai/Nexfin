@@ -23,11 +23,15 @@ export default function RegisterPage() {
   const [errors,        setErrors]        = useState<RegisterError>({})
   const [loading,       setLoading]       = useState(false)
   const [mounted,       setMounted]       = useState(false)
+  const [remember,      setRemember]      = useState(false)
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && localStorage.getItem('nexfin_auth')) {
-      router.replace('/dashboard')
-      return;
+    if (typeof window !== 'undefined') {
+      if (localStorage.getItem('nexfin_auth')) {
+        router.replace('/dashboard')
+        return;
+      }
+      setRemember(localStorage.getItem('nexfin_remember') === 'true');
     }
     setMounted(true)
   }, [router])
@@ -90,8 +94,8 @@ export default function RegisterPage() {
       localStorage.setItem('nexfin_auth', data.access_token)
       localStorage.setItem('nexfin_user', data.user.name)
 
-      // Se o usuário marcou lembrar dados no login (ou se quisermos repetir a lógica aqui)
-      if (localStorage.getItem('nexfin_remember') === 'true') {
+      // Se o usuário marcou lembrar dados
+      if (remember) {
         localStorage.setItem('nexfin_saved_email', email);
       }
 
@@ -207,10 +211,12 @@ export default function RegisterPage() {
             <input 
               type="checkbox" 
               id="remember_reg" 
-              checked={localStorage.getItem('nexfin_remember') === 'true'}
+              checked={remember}
               onChange={(e) => {
-                localStorage.setItem('nexfin_remember', e.target.checked.toString());
-                if (!e.target.checked) localStorage.removeItem('nexfin_saved_email');
+                const isChecked = e.target.checked;
+                setRemember(isChecked);
+                localStorage.setItem('nexfin_remember', isChecked.toString());
+                if (!isChecked) localStorage.removeItem('nexfin_saved_email');
               }}
               style={{ width: 14, height: 14, cursor: 'pointer', accentColor: '#2563eb' }}
             />
