@@ -89,7 +89,7 @@ export default function DashboardPage() {
     const syncAll = async () => {
       setSyncing(true)
       try {
-        fetch('http://localhost:3001/api/v1/accounts/open-finance/sync-all', {
+        fetch(`${API}/accounts/open-finance/sync-all`, {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${getToken()}` }
         })
@@ -178,7 +178,7 @@ export default function DashboardPage() {
         <div style={{ padding: 40, textAlign: 'center', background: 'rgba(239,68,68,0.05)', border: '1px solid rgba(239,68,68,0.1)', borderRadius: 12, color: '#fca5a5' }}>
           <AlertCircle size={32} style={{ margin: '0 auto 16px' }} />
           <p>{error}</p>
-          <button onClick={fetchSummary} style={{ marginTop: 16, background: 'none', border: '1px solid currentColor', color: 'inherit', padding: '8px 16px', borderRadius: 6, cursor: 'pointer' }}>Tentar novamente</button>
+          <button onClick={() => fetchSummary()} style={{ marginTop: 16, background: 'none', border: '1px solid currentColor', color: 'inherit', padding: '8px 16px', borderRadius: 6, cursor: 'pointer' }}>Tentar novamente</button>
         </div>
       ) : summaries.length === 0 ? (
         <motion.div
