@@ -1,19 +1,14 @@
 import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
-import path from 'path';
+import { PrismaPg } from '@prisma/adapter-pg';
+import pg from 'pg';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
   constructor() {
-    // Prisma 7: SQLite requer driver adapter. O adapter recebe { url } como string.
-    const dbUrl = process.env.DATABASE_URL ?? 'file:./dev.db';
-    // Garantir caminho absoluto para o arquivo SQLite
-    const resolvedUrl = dbUrl.startsWith('file:')
-      ? `file:${path.resolve(process.cwd(), dbUrl.slice(5))}`
-      : dbUrl;
-
-    const adapter = new PrismaBetterSqlite3({ url: resolvedUrl });
+    // No Prisma 7, o uso de adapters é o padrão recomendado.
+    const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+    const adapter = new PrismaPg(pool);
 
     super({
       adapter,
@@ -24,9 +19,13 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
   }
 
   async onModuleInit() {
-    console.log('[Prisma] Conectando ao banco de dados...');
-    await this.$connect();
-    console.log('[Prisma] Conexão estabelecida com sucesso.');
+    console.log('[Prisma] Conectando ao PostgreSQL (Neon) via Adapter...');
+    try {
+      await this.$connect();
+      console.log('[Prisma] Conexão com Neon estabelecida com sucesso.');
+    } catch (error) {
+      console.error('[Prisma] Erro ao conectar no Neon:', error.message);
+    }
   }
 
   async onModuleDestroy() {

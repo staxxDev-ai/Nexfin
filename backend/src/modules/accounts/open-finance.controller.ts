@@ -1,12 +1,13 @@
 import {
   Controller, Post, Body, Get, Param, UseGuards, Req, Query,
-  HttpCode, HttpStatus, BadRequestException,
+  HttpCode, HttpStatus, BadRequestException, Logger
 } from '@nestjs/common';
 import { OpenFinanceService } from './open-finance.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 
 @Controller('accounts/open-finance')
 export class OpenFinanceController {
+  private readonly logger = new Logger(OpenFinanceController.name);
   constructor(private readonly openFinanceService: OpenFinanceService) {}
 
   /**
