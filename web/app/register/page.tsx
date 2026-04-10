@@ -40,6 +40,7 @@ export default function RegisterPage() {
   const onRegisterAttempt = async (e: React.FormEvent) => {
     e.preventDefault()
     setErrors({})
+    console.log('--- Iniciando tentativa de registro ---');
     
     // Validações básicas de frontend
     if (!name.trim()) {
@@ -60,28 +61,46 @@ export default function RegisterPage() {
     }
 
     setLoading(true)
+    console.log('Acionando reCAPTCHA invisível...');
     
+    // Timeout de segurança para o reCAPTCHA (se ele não responder em 7s, cancela)
+    const captchaTimeout = setTimeout(() => {
+      if (loading) {
+        console.error('ERRO: Timeout do reCAPTCHA atingido.');
+        setLoading(false);
+        setErrors({ general: 'A verificação de segurança demorou demais. Tente atualizar a página.' });
+      }
+    }, 7000);
+
     try {
       if (recaptchaRef.current) {
         recaptchaRef.current.execute();
+      } else {
+        throw new Error('Componente reCAPTCHA não encontrado.');
       }
-    } catch (err) {
+    } catch (err: any) {
+      clearTimeout(captchaTimeout);
+      console.error('Erro ao executar reCAPTCHA:', err);
       setLoading(false)
-      setErrors({ general: 'Falha ao iniciar verificação de segurança.' })
+      setErrors({ general: 'Falha ao iniciar verificação de segurança: ' + err.message })
     }
   }
 
   const onReCaptchaChange = async (token: string | null) => {
+    console.log('Resposta do reCAPTCHA recebida. Token:', token ? 'OK' : 'FALHA');
+    
     if (!token) {
       setLoading(false)
+      setErrors({ general: 'Verificação de segurança falhou. Tente novamente.' })
       return
     }
 
     try {
       const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1'
+      console.log('Chamando API:', API + '/auth/register');
       
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 segundos de timeout
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
 
       const response = await fetch(`${API}/auth/register`, {
         method: 'POST',
@@ -92,12 +111,13 @@ export default function RegisterPage() {
 
       clearTimeout(timeoutId);
       const data = await response.json();
+      console.log('Resposta da API recebida. Status:', response.status);
 
       if (!response.ok) {
         throw new Error(data.message || `Erro no servidor (${response.status})`);
       }
 
-      // Login automático
+      console.log('Registro bem-sucedido! Redirecionando...');
       localStorage.setItem('nexfin_auth', data.access_token)
       localStorage.setItem('nexfin_user', data.user.name)
 
@@ -108,10 +128,11 @@ export default function RegisterPage() {
       router.replace('/dashboard')
 
     } catch (err: any) {
+      console.error('Erro no fluxo de registro:', err);
       if (err.name === 'AbortError') {
-        setErrors({ general: 'O servidor demorou demais para responder. Verifique sua conexão ou se a API está online.' })
+        setErrors({ general: 'O servidor demorou demais para responder.' })
       } else {
-        setErrors({ general: `Falha na conexão: ${err.message}. Verifique se a URL da API está correta.` })
+        setErrors({ general: `Falha na conexão: ${err.message}` })
       }
       recaptchaRef.current?.reset()
     } finally {
