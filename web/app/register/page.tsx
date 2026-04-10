@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import { Eye, EyeOff } from 'lucide-react'
 import ReCAPTCHA from 'react-google-recaptcha'
 
 type RegisterError = { name?: string; email?: string; pass?: string; confirmPass?: string; general?: string }
@@ -19,11 +20,11 @@ export default function RegisterPage() {
   const [email,         setEmail]         = useState('')
   const [password,      setPassword]      = useState('')
   const [confirmPass,   setConfirmPass]   = useState('')
-  const [showPass,      setShowPass]      = useState(false)
   const [errors,        setErrors]        = useState<RegisterError>({})
   const [loading,       setLoading]       = useState(false)
   const [mounted,       setMounted]       = useState(false)
   const [remember,      setRemember]      = useState(false)
+  const [showPassword,  setShowPassword]  = useState(false)
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -190,26 +191,32 @@ export default function RegisterPage() {
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 24 }}>
-            <div>
+            <div style={{ position: 'relative' }}>
               <label style={{ display: 'block', fontSize: 10, fontWeight: 700, color: 'rgba(255,255,255,0.3)', marginBottom: 6, letterSpacing: '0.1em' }}>SENHA</label>
               <input
-                type={showPass ? 'text' : 'password'}
+                type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={e => { setPassword(e.target.value); setErrors({}) }}
                 placeholder="••••••"
                 style={inputStyle(!!errors.pass)}
               />
+              <button type="button" onClick={() => setShowPassword(!showPassword)} style={eyeButtonStyle}>
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
               {errors.pass && <p style={errorText}>{errors.pass}</p>}
             </div>
-            <div>
+            <div style={{ position: 'relative' }}>
               <label style={{ display: 'block', fontSize: 10, fontWeight: 700, color: 'rgba(255,255,255,0.3)', marginBottom: 6, letterSpacing: '0.1em' }}>CONFIRMAR</label>
               <input
-                type={showPass ? 'text' : 'password'}
+                type={showPassword ? 'text' : 'password'}
                 value={confirmPass}
                 onChange={e => { setConfirmPass(e.target.value); setErrors({}) }}
                 placeholder="••••••"
                 style={inputStyle(!!errors.confirmPass)}
               />
+              <button type="button" onClick={() => setShowPassword(!showPassword)} style={eyeButtonStyle}>
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
               {errors.confirmPass && <p style={errorText}>{errors.confirmPass}</p>}
             </div>
           </div>
@@ -279,6 +286,20 @@ export default function RegisterPage() {
     </div>
   )
 }
+
+const eyeButtonStyle: React.CSSProperties = {
+  position: 'absolute',
+  right: 12,
+  top: '50%',
+  transform: 'translateY(-50%)',
+  background: 'none',
+  border: 'none',
+  color: 'rgba(255,255,255,0.4)',
+  cursor: 'pointer',
+  display: 'flex',
+  alignItems: 'center',
+  padding: 0
+};
 
 const inputStyle = (hasError: boolean): React.CSSProperties => ({
   width: '100%', background: 'rgba(255,255,255,0.05)',

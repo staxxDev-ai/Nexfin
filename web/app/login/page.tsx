@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Eye, EyeOff } from 'lucide-react'
 import ReCAPTCHA from 'react-google-recaptcha'
 
 type FieldError = { email?: string; pass?: string; captcha?: string; general?: string }
@@ -24,6 +25,7 @@ export default function LoginPage() {
   const [loading,        setLoading]        = useState(false)
   const [mounted,        setMounted]        = useState(false)
   const [remember,       setRemember]       = useState(false)
+  const [showPassword,   setShowPassword]   = useState(false)
 
   // Monta animação inicial ao carregar a página
   useEffect(() => {
@@ -238,7 +240,7 @@ export default function LoginPage() {
                     <span style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', opacity: 0.3 }}>🔑</span>
                     <input
                       autoFocus
-                      type={showPass ? 'text' : 'password'}
+                      type={showPassword ? 'text' : 'password'}
                       value={password}
                       onChange={e => { setPassword(e.target.value); setErrors({}) }}
                       placeholder="••••••••"
