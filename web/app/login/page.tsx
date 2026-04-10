@@ -271,6 +271,13 @@ export default function LoginPage() {
                 </button>
 
                 <div style={{ textAlign: 'center', marginTop: 20 }}>
+                  <Link 
+                    href="/forgot-password" 
+                    style={{ 
+                      color: 'rgba(255,255,255,0.4)', fontSize: 13, textDecoration: 'none', 
+                      fontWeight: 500, transition: 'color 0.2s' 
+                    }}
+                  >
                     Esqueci minha senha
                   </Link>
                 </div>
