@@ -29,8 +29,9 @@ export default function Sidebar() {
   const [isExpanded, setIsExpanded] = useState(false)
 
   const handleLogout = () => {
-    sessionStorage.removeItem('nexfin_auth')
-    sessionStorage.removeItem('nexfin_user')
+    localStorage.removeItem('nexfin_auth')
+    localStorage.removeItem('nexfin_user')
+    // Opcional: manter o nexfin_remember se quiser que o e-mail continue salvo
     router.replace('/login')
   }
 

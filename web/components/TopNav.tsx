@@ -46,9 +46,9 @@ export default function TopNav() {
   }, [])
 
   const handleLogout = () => {
-    sessionStorage.removeItem('nexfin_auth')
-    sessionStorage.removeItem('nexfin_user')
-    sessionStorage.removeItem('nexfin_avatar')
+    localStorage.removeItem('nexfin_auth')
+    localStorage.removeItem('nexfin_user')
+    sessionStorage.removeItem('nexfin_avatar') // Avatar costuma ser temporário, mas limpamos também
     router.replace('/login')
   }
 
