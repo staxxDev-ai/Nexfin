@@ -6,6 +6,6 @@ export const maskValue = (value: string | number, isPrivate: boolean): string =>
   const strValue = typeof value === 'number' ? value.toString() : value;
   if (!isPrivate) return strValue;
 
-  // Substitui apenas números por *, mantendo a pontuação e símbolos de moeda
-  return strValue.replace(/[0-9]/g, '*');
+  // Substitui números, pontos e vírgulas por *, mantendo apenas símbolos de moeda e espaços
+  return strValue.replace(/[0-9.,]/g, '*');
 };
