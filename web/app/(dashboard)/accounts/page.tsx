@@ -9,6 +9,7 @@ import {
   Settings2, ChevronRight, PieChart, Banknote
 } from 'lucide-react'
 import { usePrivacy } from '@/context/PrivacyContext'
+import { maskValue } from '@/utils/privacy'
 
 // ─── Tipos ───────────────────────────────────────────────────────────────────
 type BankAccount = {
@@ -156,10 +157,9 @@ function InstitutionCard({
                 fontSize: 16, 
                 fontWeight: 700, 
                 color: acc.balance >= 0 ? '#fff' : '#ef4444',
-                filter: isPrivate ? 'blur(5px)' : 'none',
-                transition: 'filter 0.3s ease'
+                transition: 'all 0.3s ease'
               }}>
-                {formattedValue}
+                {maskValue(formattedValue, isPrivate)}
               </div>
             </div>
           )
@@ -183,10 +183,9 @@ function InstitutionCard({
               fontWeight: 900, 
               color: totalBalance >= 0 ? '#22c55e' : '#ef4444', 
               letterSpacing: '-0.02em',
-              filter: isPrivate ? 'blur(5px)' : 'none',
-              transition: 'filter 0.3s ease'
+              transition: 'all 0.3s ease'
             }}>
-              {formattedTotal}
+              {maskValue(formattedTotal, isPrivate)}
             </div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'rgba(34,197,94,0.4)', fontSize: 11, fontWeight: 600 }}>

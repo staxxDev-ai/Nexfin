@@ -16,6 +16,7 @@ import {
 } from 'lucide-react'
 import { usePrivacy } from '@/context/PrivacyContext'
 import { useSocket } from '@/context/SocketContext'
+import { maskValue } from '@/utils/privacy'
 
 // ─── Tipos ───────────────────────────────────────────────────────────────────
 type SummaryItem = {
@@ -254,10 +255,9 @@ export default function DashboardPage() {
                   fontSize: 28, 
                   fontWeight: 800, 
                   color: '#fff',
-                  filter: isPrivate ? 'blur(5px)' : 'none',
-                  transition: 'filter 0.3s ease'
+                  transition: 'all 0.3s ease'
                 }}>
-                  {balance.value}
+                  {maskValue(balance.value, isPrivate)}
                 </div>
               </div>
             </motion.div>
@@ -299,21 +299,22 @@ export default function DashboardPage() {
                       {acc.accountType === 'CREDIT' ? 'FATURA ATUAL' : 'SALDO DISPONÍVEL'}
                     </div>
                     <div style={{ 
-                      fontSize: 20, fontWeight: 800, color: '#fff',
-                      filter: isPrivate ? 'blur(5px)' : 'none'
+                      fontSize: 20, fontWeight: 800, color: '#fff'
                     }}>
-                      {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: acc.currency }).format(acc.balance)}
+                      {maskValue(new Intl.NumberFormat('pt-BR', { style: 'currency', currency: acc.currency }).format(acc.balance), isPrivate)}
                     </div>
                   </div>
 
                   {acc.accountType === 'CREDIT' && acc.creditLimit && (
                     <div style={{ marginTop: 8 }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, fontWeight: 700, marginBottom: 6 }}>
-                        <span style={{ color: 'rgba(255,255,255,0.3)' }}>LIMITE UTILIZADO</span>
-                        <span style={{ color: '#fff' }}>
-                          {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: acc.currency }).format(usedLimit)}
-                        </span>
-                      </div>
+                      {!isPrivate && (
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, fontWeight: 700, marginBottom: 6 }}>
+                          <span style={{ color: 'rgba(255,255,255,0.3)' }}>LIMITE UTILIZADO</span>
+                          <span style={{ color: '#fff' }}>
+                            {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: acc.currency }).format(usedLimit)}
+                          </span>
+                        </div>
+                      )}
                       <div style={{ height: 4, width: '100%', background: 'rgba(255,255,255,0.05)', borderRadius: 2, overflow: 'hidden' }}>
                         <motion.div 
                           initial={{ width: 0 }}
@@ -322,10 +323,12 @@ export default function DashboardPage() {
                           style={{ height: '100%', background: limitPerc > 80 ? '#ef4444' : '#3b82f6', borderRadius: 2 }} 
                         />
                       </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 9, marginTop: 6, color: 'rgba(255,255,255,0.2)' }}>
-                        <span>TOTAL UTILIZADO TOTAL</span>
-                        <span>LIMITE DE {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: acc.currency }).format(acc.creditLimit)}</span>
-                      </div>
+                      {!isPrivate && (
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 9, marginTop: 6, color: 'rgba(255,255,255,0.2)' }}>
+                          <span>TOTAL UTILIZADO TOTAL</span>
+                          <span>LIMITE DE {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: acc.currency }).format(acc.creditLimit)}</span>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>

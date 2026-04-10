@@ -19,6 +19,7 @@ import {
 } from 'lucide-react'
 import { useSocket } from '@/context/SocketContext'
 import { usePrivacy } from '@/context/PrivacyContext'
+import { maskValue } from '@/utils/privacy'
 
 const MONTHS = ['JANEIRO', 'FEVEREIRO', 'MARÇO', 'ABRIL', 'MAIO', 'JUNHO', 'JULHO', 'AGOSTO', 'SETEMBRO', 'OUTUBRO', 'NOVEMBRO', 'DEZEMBRO']
 
@@ -436,11 +437,10 @@ export default function HistoryPage() {
                     <div style={{ 
                       fontSize: 15, fontWeight: 700, 
                       color: t.amount > 0 ? '#22c55e' : '#fff',
-                      filter: isPrivate ? 'blur(5px)' : 'none',
-                      transition: 'filter 0.3s ease'
+                      transition: 'all 0.3s ease'
                     }}>
                       {t.amount > 0 ? `+ ` : `- `}
-                      {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: t.currency || 'BRL' }).format(Math.abs(t.amount))}
+                      {maskValue(new Intl.NumberFormat('pt-BR', { style: 'currency', currency: t.currency || 'BRL' }).format(Math.abs(t.amount)), isPrivate)}
                     </div>
                   </td>
                   <td style={{ padding: '20px', textAlign: 'center' }}>

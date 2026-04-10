@@ -8,6 +8,8 @@ import {
   TrendingUp,
   ExternalLink
 } from 'lucide-react'
+import { usePrivacy } from '@/context/PrivacyContext'
+import { maskValue } from '@/utils/privacy'
 
 interface BankCardProps {
   bankName: string
@@ -27,6 +29,7 @@ export default function BankCard({
   lastSync 
 }: BankCardProps) {
   const router = useRouter()
+  const { isPrivate } = usePrivacy()
 
   const goToStatement = () => {
     // Redireciona para o extrato filtrando pelo nome do banco
@@ -94,7 +97,7 @@ export default function BankCard({
             </span>
           </div>
           <div style={{ fontSize: 20, fontWeight: 800, color: '#fff' }}>
-            {balance}
+            {maskValue(balance, isPrivate)}
           </div>
         </div>
 
@@ -108,7 +111,7 @@ export default function BankCard({
               </span>
             </div>
             <div style={{ fontSize: 13, fontWeight: 700, color: '#ef4444' }}>
-              {spent}
+              {maskValue(spent, isPrivate)}
             </div>
           </div>
           <div>
@@ -119,7 +122,7 @@ export default function BankCard({
               </span>
             </div>
             <div style={{ fontSize: 13, fontWeight: 700, color: '#22c55e' }}>
-              {invested}
+              {maskValue(invested, isPrivate)}
             </div>
           </div>
         </div>
