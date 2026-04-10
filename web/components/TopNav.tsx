@@ -30,16 +30,46 @@ export default function TopNav() {
   const pathname = usePathname()
   const { isPrivate, togglePrivacy } = usePrivacy()
   const [avatar, setAvatar] = useState<string | null>(null)
+  const [name, setName] = useState('')
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1'
 
   useEffect(() => {
-    // Carrega o avatar se existir no sessionStorage
-    const savedAvatar = sessionStorage.getItem('nexfin_avatar')
-    if (savedAvatar) setAvatar(savedAvatar)
+    async function initProfile() {
+      // 1. Tenta carregar do cache local imediatamente
+      const cachedAvatar = localStorage.getItem('nexfin_avatar')
+      const cachedName = localStorage.getItem('nexfin_user')
+      if (cachedAvatar) setAvatar(cachedAvatar)
+      if (cachedName) setName(cachedName)
 
-    // Listener para mudanças no sessionStorage (opcional para refletir no Dashboard sem refresh)
+      // 2. Busca do backend para garantir sincronia
+      try {
+        const token = localStorage.getItem('nexfin_auth')
+        if (!token) return
+
+        const response = await fetch(`${API_URL}/users/me`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        })
+
+        if (response.ok) {
+          const data = await response.json()
+          setAvatar(data.avatarUrl)
+          setName(data.name)
+          
+          // Atualiza cache
+          if (data.avatarUrl) localStorage.setItem('nexfin_avatar', data.avatarUrl)
+          if (data.name) localStorage.setItem('nexfin_user', data.name)
+        }
+      } catch (err) {
+        console.error('Erro ao sincronizar TopNav:', err)
+      }
+    }
+
+    initProfile()
+
     const handleStorageChange = () => {
-      const updatedAvatar = sessionStorage.getItem('nexfin_avatar')
-      setAvatar(updatedAvatar)
+      setAvatar(localStorage.getItem('nexfin_avatar'))
+      setName(localStorage.getItem('nexfin_user') || '')
     }
     window.addEventListener('storage', handleStorageChange)
     return () => window.removeEventListener('storage', handleStorageChange)
@@ -48,8 +78,15 @@ export default function TopNav() {
   const handleLogout = () => {
     localStorage.removeItem('nexfin_auth')
     localStorage.removeItem('nexfin_user')
-    sessionStorage.removeItem('nexfin_avatar') // Avatar costuma ser temporário, mas limpamos também
+    localStorage.removeItem('nexfin_avatar')
     router.replace('/login')
+  }
+
+  const getInitials = (userName: string) => {
+    if (!userName) return '?'
+    const parts = userName.trim().split(' ')
+    if (parts.length >= 2) return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase()
+    return userName[0].toUpperCase()
   }
 
   return (
@@ -74,23 +111,26 @@ export default function TopNav() {
           boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
         }}
       >
-        {/* Logo Discreta ou Foto do Usuário - Acesso ao Perfil */}
+        {/* Foto do Usuário / Iniciais - Acesso ao Perfil */}
         <motion.div 
           whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(59,130,246,0.6)' }}
           whileTap={{ scale: 0.95 }}
           onClick={() => router.push('/profile')}
           style={{ 
-            width: 28, height: 28, background: avatar ? 'transparent' : '#2563eb', borderRadius: avatar ? '50%' : 4, 
+            width: 32, height: 32, background: avatar ? 'transparent' : 'linear-gradient(135deg, #2563eb, #1e40af)', 
+            borderRadius: '50%',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            marginRight: 12, cursor: 'pointer', transition: 'all 0.2s',
+            marginRight: 10, cursor: 'pointer', transition: 'all 0.2s',
             zIndex: 10, overflow: 'hidden',
-            border: avatar ? '1px solid rgba(59,130,246,0.3)' : 'none'
+            border: '2px solid rgba(255,255,255,0.05)'
           }}
         >
           {avatar ? (
             <img src={avatar} alt="Me" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           ) : (
-            <span style={{ color: '#fff', fontWeight: 900, fontSize: 14 }}>N</span>
+            <span style={{ color: '#fff', fontWeight: 900, fontSize: 11, letterSpacing: '-0.02em' }}>
+              {getInitials(name)}
+            </span>
           )}
         </motion.div>
 

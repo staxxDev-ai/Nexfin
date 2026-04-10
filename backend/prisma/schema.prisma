@@ -13,6 +13,8 @@ model User {
   passwordHash                String?          @map("password_hash")
   name                        String
   avatarUrl                   String?          @map("avatar_url")
+  bio                         String?
+  age                         Int?
   encryptedCpf                String?          @map("encrypted_cpf")
   phone                       String?
   mfaEnabled                  Boolean          @default(false) @map("mfa_enabled")

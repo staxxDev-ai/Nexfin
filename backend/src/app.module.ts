@@ -8,6 +8,7 @@ import { AiAgentsController } from './modules/ai-agents/ai-agents.controller';
 import { AuthModule } from './modules/auth/auth.module';
 import { CommonModule } from './common/common.module';
 import { WebsocketModule } from './modules/websocket/websocket.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { WebsocketModule } from './modules/websocket/websocket.module';
     AuthModule,
     AccountsModule,
     WebsocketModule,
+    UsersModule,
   ],
   providers: [
     AiAgentsService,
