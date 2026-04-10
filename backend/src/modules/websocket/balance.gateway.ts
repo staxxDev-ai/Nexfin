@@ -19,7 +19,7 @@ import { Logger } from '@nestjs/common';
  *  - agent:insight   → { agentName, message, severity }
  *  - sync:status     → { accountId, status: 'syncing' | 'done' | 'error' }
  */
-@WebSocketGateway(3002, {
+@WebSocketGateway({
   cors: {
     origin: process.env.WEB_URL ?? 'http://localhost:3000',
     credentials: true,

@@ -42,7 +42,7 @@ async function bootstrap() {
   await app.listen(port);
 
   logger.log(`🚀 NEXFIN Backend v4.0 (CORS UNLOCKED) rodando em port ${port}`);
-  logger.log(`⚡ WebSocket Gateway em ws://localhost:3002/nexfin`);
+  logger.log(`⚡ WebSocket Gateway ativo na mesma porta ${port} (namespace: /nexfin)`);
   logger.log(`📅 Timezone: America/Sao_Paulo — ${new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}`);
 }
 
