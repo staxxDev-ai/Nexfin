@@ -78,23 +78,28 @@ export default function RegisterPage() {
 
     try {
       const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1'
+      
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 segundos de timeout
+
       const response = await fetch(`${API}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password, recaptchaToken: token }),
+        signal: controller.signal
       });
 
+      clearTimeout(timeoutId);
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || 'Falha ao criar conta.');
+        throw new Error(data.message || `Erro no servidor (${response.status})`);
       }
 
       // Login automático
       localStorage.setItem('nexfin_auth', data.access_token)
       localStorage.setItem('nexfin_user', data.user.name)
 
-      // Se o usuário marcou lembrar dados
       if (remember) {
         localStorage.setItem('nexfin_saved_email', email);
       }
@@ -102,7 +107,11 @@ export default function RegisterPage() {
       router.replace('/dashboard')
 
     } catch (err: any) {
-      setErrors({ general: err.message })
+      if (err.name === 'AbortError') {
+        setErrors({ general: 'O servidor demorou demais para responder. Verifique sua conexão ou se a API está online.' })
+      } else {
+        setErrors({ general: `Falha na conexão: ${err.message}. Verifique se a URL da API está correta.` })
+      }
       recaptchaRef.current?.reset()
     } finally {
       setLoading(false)
