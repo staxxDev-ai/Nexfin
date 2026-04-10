@@ -9,9 +9,9 @@ export async function POST(request: NextRequest) {
       || process.env.NEXT_PUBLIC_API_URL 
       || 'https://nexfin-production.up.railway.app/api/v1'
 
-    console.log('[Proxy /auth/register] Conectando em:', API)
+    console.log('[Proxy /auth/login] Conectando em:', API)
 
-    const response = await fetch(`${API}/auth/register`, {
+    const response = await fetch(`${API}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
@@ -25,9 +25,13 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(data, { status: 200 })
   } catch (err: any) {
-    console.error('[Proxy /auth/register] Erro:', err.message)
+    console.error('[Proxy /auth/login] Erro detalhado:', {
+      message: err.message,
+      code: err.code,
+      stack: err.stack
+    })
     return NextResponse.json(
-      { message: 'Servidor indisponível. Verifique se o backend está online.' },
+      { message: `Erro de conexão: ${err.message}. Verifique se a URL ${process.env.API_URL || 'https://nexfin-production.up.railway.app'} está correta.` },
       { status: 503 }
     )
   }
