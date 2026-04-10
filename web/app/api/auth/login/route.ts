@@ -24,9 +24,13 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(data, { status: 200 })
   } catch (err: any) {
-    console.error('[Proxy /auth/login] Erro:', err.message)
+    console.error('[Proxy /auth/login] Erro detalhado:', {
+      message: err.message,
+      code: err.code,
+      stack: err.stack
+    })
     return NextResponse.json(
-      { message: 'Servidor indisponível. Verifique se o backend está online.' },
+      { message: `Erro de conexão: ${err.message}. Verifique se a URL ${process.env.API_URL || 'https://nexfin-production.up.railway.app'} está correta.` },
       { status: 503 }
     )
   }
