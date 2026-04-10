@@ -26,9 +26,17 @@ export default function LoginPage() {
 
   // Monta animação inicial ao carregar a página
   useEffect(() => {
-    if (typeof window !== 'undefined' && localStorage.getItem('nexfin_auth')) {
-      router.replace('/dashboard')
-      return;
+    if (typeof window !== 'undefined') {
+      if (localStorage.getItem('nexfin_auth')) {
+        router.replace('/dashboard')
+        return;
+      }
+      
+      const savedEmail = localStorage.getItem('nexfin_saved_email');
+      const remember = localStorage.getItem('nexfin_remember') === 'true';
+      if (remember && savedEmail) {
+        setEmail(savedEmail);
+      }
     }
     setMounted(true)
   }, [router])
@@ -91,6 +99,11 @@ export default function LoginPage() {
 
       localStorage.setItem('nexfin_auth', data.access_token)
       localStorage.setItem('nexfin_user', data.user.name)
+
+      if (localStorage.getItem('nexfin_remember') === 'true') {
+        localStorage.setItem('nexfin_saved_email', email);
+      }
+      
       router.replace('/dashboard')
 
     } catch (err: any) {
@@ -258,17 +271,33 @@ export default function LoginPage() {
                 </button>
 
                 <div style={{ textAlign: 'center', marginTop: 20 }}>
-                  <Link 
-                    href="/forgot-password" 
-                    style={{ 
-                      color: 'rgba(255,255,255,0.4)', fontSize: 13, textDecoration: 'none', 
-                      fontWeight: 500, transition: 'color 0.2s' 
-                    }}
-                    onMouseOver={e => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}
-                    onMouseOut={e => e.currentTarget.style.color = 'rgba(255,255,255,0.4)'}
-                  >
                     Esqueci minha senha
                   </Link>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 24, padding: '12px', background: 'rgba(255,255,255,0.03)', borderRadius: 10, border: '1px solid rgba(255,255,255,0.05)' }}>
+                  <input 
+                    type="checkbox" 
+                    id="remember" 
+                    checked={localStorage.getItem('nexfin_remember') === 'true'}
+                    onChange={(e) => {
+                      localStorage.setItem('nexfin_remember', e.target.checked.toString());
+                      if (!e.target.checked) localStorage.removeItem('nexfin_saved_email');
+                    }}
+                    style={{ width: 16, height: 16, cursor: 'pointer', accentColor: '#2563eb' }}
+                  />
+                  <label htmlFor="remember" style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', cursor: 'pointer', userSelect: 'none' }}>
+                    Lembrar meus dados para acesso rápido
+                  </label>
+                </div>
+
+                <div style={{ marginTop: 24, pt: 16, borderTop: '1px solid rgba(255,255,255,0.05)', textAlign: 'center' }}>
+                  <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', margin: 0 }}>
+                    Novo por aqui?{' '}
+                    <Link href="/register" style={{ color: '#60a5fa', fontWeight: 600, textDecoration: 'none' }}>
+                      Crie sua conta agora
+                    </Link>
+                  </p>
                 </div>
               </form>
             </motion.div>

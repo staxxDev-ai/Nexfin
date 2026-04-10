@@ -13,4 +13,8 @@ export class RegisterDto {
   @IsString()
   @IsNotEmpty({ message: 'Nome é obrigatório.' })
   name: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'Token de segurança é obrigatório.' })
+  recaptchaToken: string;
 }

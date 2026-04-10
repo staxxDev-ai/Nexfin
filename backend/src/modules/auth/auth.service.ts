@@ -21,7 +21,10 @@ export class AuthService {
   ) {}
 
   async register(registerDto: RegisterDto) {
-    const { email, password, name } = registerDto;
+    const { email, password, name, recaptchaToken } = registerDto;
+
+    // 🛡️ Validação Oficial do Google reCAPTCHA
+    await this.validateRecaptcha(recaptchaToken);
 
     // Verificar se o usuário já existe
     const existingUser = await this.prisma.user.findUnique({
@@ -42,30 +45,27 @@ export class AuthService {
         email,
         passwordHash,
         name,
-        // O auth0Id é opcional no schema agora
       },
     });
 
-    // Retornar usuário sem o hash da senha
-    const { passwordHash: _, ...result } = user;
-    return result;
+    // Gerar token para login automático
+    const payload = { sub: user.id, email: user.email };
+    
+    return {
+      access_token: this.jwtService.sign(payload),
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+      },
+    };
   }
 
   async login(loginDto: LoginDto) {
     const { email, password, recaptchaToken } = loginDto;
 
     // 🛡️ Validação Oficial do Google reCAPTCHA
-    try {
-      const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${this.RECAPTCHA_SECRET}&response=${recaptchaToken}`;
-      const recaptchaResponse = await axios.post<{ success: boolean }>(verifyUrl);
-      
-      if (!recaptchaResponse.data.success) {
-        throw new UnauthorizedException('Falha na verificação de segurança (reCAPTCHA inválido).');
-      }
-    } catch (error: any) {
-      if (error instanceof UnauthorizedException) throw error;
-      throw new UnauthorizedException('Falha na comunicação com o serviço de segurança.');
-    }
+    await this.validateRecaptcha(recaptchaToken);
 
     // Buscar usuário
     const user = await this.prisma.user.findUnique({
@@ -94,6 +94,20 @@ export class AuthService {
         name: user.name,
       },
     };
+  }
+
+  private async validateRecaptcha(token: string) {
+    try {
+      const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${this.RECAPTCHA_SECRET}&response=${token}`;
+      const recaptchaResponse = await axios.post<{ success: boolean }>(verifyUrl);
+      
+      if (!recaptchaResponse.data.success) {
+        throw new UnauthorizedException('Falha na verificação de segurança (reCAPTCHA inválido).');
+      }
+    } catch (error: any) {
+      if (error instanceof UnauthorizedException) throw error;
+      throw new UnauthorizedException('Falha na comunicação com o serviço de segurança.');
+    }
   }
 
   async validateUser(payload: any) {
