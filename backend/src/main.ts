@@ -18,11 +18,12 @@ async function bootstrap() {
     disableErrorMessages: process.env.NODE_ENV === 'production',
   }));
 
-  // ── CORS restrito ao frontend ──
   app.enableCors({
     origin: [
       process.env.WEB_URL ?? 'http://localhost:3000',
       'http://localhost:3000',
+      'http://localhost:3001',
+      'https://nexfin-hazel.vercel.app',
     ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
