@@ -29,7 +29,7 @@ type BankAccount = {
 type SetupStep = 1 | 2 | 3 | 4 | 5
 type FormStatus = 'idle' | 'validating' | 'saving' | 'generating-token' | 'success' | 'error'
 
-const API = 'http://localhost:3001/api/v1'
+const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1'
 
 const ACCOUNT_TYPE_LABELS: Record<string, { label: string; icon: any }> = {
   CHECKING: { label: 'C.C (Conta Corrente)', icon: Banknote },

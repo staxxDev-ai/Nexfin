@@ -28,7 +28,7 @@ type SummaryItem = {
   rawTotal: number
 }
 
-const API = 'http://localhost:3001/api/v1'
+const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1'
 
 export default function DashboardPage() {
   const [userName, setUserName] = useState('Usuário')
@@ -62,6 +62,7 @@ export default function DashboardPage() {
 
       const data = await res.json()
       setSummaries(data)
+
 
       // Buscar Contas Únicas
       const accRes = await fetch(`${API}/accounts/open-finance/accounts`, {

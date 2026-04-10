@@ -37,9 +37,11 @@ export default function ChatPage() {
   const [threads, setThreads] = useState<Thread[]>([])
   const [currentThreadId, setCurrentThreadId] = useState<string | null>(null)
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
-  
-  const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [input, setInput] = useState('')
+  
+  const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1'
+  
   const [isGeminiActive, setIsGeminiActive] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
@@ -106,7 +108,7 @@ export default function ChatPage() {
     setIsLoading(true)
     
     try {
-      const res = await fetch(`http://localhost:3001/api/v1/ai-agents/threads/${id}`, {
+      const res = await fetch(`${API}/ai-agents/threads`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       const data = await res.json()
@@ -130,7 +132,7 @@ export default function ChatPage() {
     setIsLoading(true)
     try {
       const title = `Insight ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
-      const res = await fetch('http://localhost:3001/api/v1/ai-agents/threads', {
+      const res = await fetch(`${API}/ai-agents/threads`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',

@@ -31,7 +31,8 @@ export default function InvestmentsPage() {
           return
         }
 
-        const response = await fetch('http://localhost:3001/api/v1/accounts/open-finance/investments', {
+        const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1'
+        const response = await fetch(`${API}/accounts/open-finance/investments`, {
           headers: { 'Authorization': `Bearer ${token}` }
         })
 

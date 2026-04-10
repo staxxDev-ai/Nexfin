@@ -18,14 +18,15 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
     // Obter o ID do usuário para autenticação no namespace
     const userId = localStorage.getItem('nexfin_user_id') || 'guest'
     
-    // Conectar ao namespace /nexfin na porta 3002
-    const socketInstance = io('http://localhost:3002/nexfin', {
+    // Conectar ao namespace /nexfin usando variável de ambiente para produção
+    const wsUrl = process.env.NEXT_PUBLIC_WS_URL || 'http://localhost:3002'
+    const socketInstance = io(`${wsUrl}/nexfin`, {
       auth: { userId },
-      transports: ['websocket'], // Forçar websocket para evitar pollings de porta cruzada
+      transports: ['websocket'],
     })
 
     socketInstance.on('connect', () => {
-      console.log('[Socket] Conectado ao servidor NEXFIN (3002)')
+      console.log('[Socket] Conectado ao servidor NEXFIN')
       setConnected(true)
     })
 
