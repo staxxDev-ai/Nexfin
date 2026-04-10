@@ -3,17 +3,17 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Copiar arquivos de dependências
-COPY package*.json ./
-COPY prisma ./prisma/
+# Copiar arquivos de dependências (usando o caminho relativo à raiz do repo)
+COPY backend/package*.json ./
+COPY backend/prisma ./prisma/
 
-# Instalar dependências (incluindo devDependencies para o build)
+# Instalar dependências
 RUN npm install
 
-# Copiar o restante do código
-COPY . .
+# Copiar o restante do código do backend
+COPY backend/ .
 
-# Gerar o Prisma Client (necessário para o build do NestJS)
+# Gerar o Prisma Client
 RUN npx prisma generate
 
 # Build da aplicação
@@ -24,16 +24,15 @@ FROM node:20-alpine AS runner
 
 WORKDIR /app
 
-# Variáveis de ambiente padrão
 ENV NODE_ENV=production
 
-# Copiar apenas o necessário do estágio de build
+# Copiar o necessário do estágio de build
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/prisma ./prisma
 
-# Expor a porta (Railway injeta PORT automaticamente, mas Nest usa 3001 por padrão)
+# Expor a porta 3001
 EXPOSE 3001
 
 # Comando para rodar a aplicação
