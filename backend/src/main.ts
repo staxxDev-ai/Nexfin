@@ -19,15 +19,12 @@ async function bootstrap() {
   }));
 
   app.enableCors({
-    origin: [
-      process.env.WEB_URL ?? 'http://localhost:3000',
-      'http://localhost:3000',
-      'http://localhost:3001',
-      'https://nexfin-hazel.vercel.app',
-    ],
+    origin: true, // Libera qualquer origem para teste de conexão
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
   });
 
   // ── Prefixo global das rotas ──
