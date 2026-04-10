@@ -1,0 +1,20 @@
+﻿ GET /dashboard 200 in 121ms
+ GET /dashboard 200 in 38ms
+ GET /login 200 in 15ms
+ GET /dashboard 200 in 16ms
+ GET /login 200 in 12ms
+ Ôùï Compiling /accounts ...
+ Ô£ô Compiled /accounts in 752ms (1659 modules)
+ GET /accounts 200 in 875ms
+ GET /dashboard 200 in 10ms
+ Ôùï Compiling /investments ...
+ Ô£ô Compiled /investments in 995ms (1672 modules)
+ GET /investments 200 in 1092ms
+ Ô£ô Compiled /history in 456ms (1699 modules)
+ GET /history 200 in 542ms
+ Ô£ô Compiled /_not-found in 306ms (1703 modules)
+ GET /settings 404 in 347ms
+ GET /settings 404 in 41ms
+ GET /history 200 in 78ms
+ GET /accounts 200 in 12ms
+ GET /dashboard 200 in 11ms

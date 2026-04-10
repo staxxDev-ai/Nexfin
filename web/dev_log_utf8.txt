@@ -1,0 +1,133 @@
+﻿
+> nexfin-web@0.1.0 dev
+> next dev
+
+   Ôû▓ Next.js 15.1.0
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.112:3000
+
+ Ô£ô Starting...
+ Ô£ô Ready in 11s
+ Ôùï Compiling /_not-found ...
+ Ô£ô Compiled /_not-found in 1305ms (559 modules)
+ GET / 404 in 2237ms
+ Ôùï Compiling /login ...
+ Ô£ô Compiled /login in 1781ms (1351 modules)
+ GET /login 200 in 2110ms
+ GET / 404 in 49ms
+ GET /login 200 in 25ms
+ Ôùï Compiling /dashboard ...
+node.exe :  Ô¿» ./app/(dashboard)/dashboard/page.tsx
+No linha:1 caractere:1
++ & "D:\/node.exe" 
+"D:\/node_modules/npm/bin/npm-cli.js" run dev
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( Ô¿» ./    
+app/(das...hboard/page.tsx:String) [], RemoteExc    
+eption
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Error:   [31mx[0m Expression expected
+     ,-[[36;1;4mD:\Antigravity\NEXFIN\web\app\(dashboar
+d)\dashboard\page.tsx[0m:144:1]
+ [2m141[0m |   )
+ [2m142[0m | }
+ [2m143[0m | 
+ [2m144[0m |     </div>
+     : [35;1m     ^[0m
+ [2m145[0m |   )
+ [2m146[0m | }
+     `----
+  [31mx[0m Expression expected
+     ,-[[36;1;4mD:\Antigravity\NEXFIN\web\app\(dashboar
+d)\dashboard\page.tsx[0m:145:1]
+ [2m142[0m | }
+ [2m143[0m | 
+ [2m144[0m |     </div>
+ [2m145[0m |   )
+     : [35;1m  ^[0m
+ [2m146[0m | }
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/(dashboard)/dashboard/page.tsx
+ Ô¿» ./app/(dashboard)/dashboard/page.tsx
+Error:   [31mx[0m Expression expected
+     ,-[[36;1;4mD:\Antigravity\NEXFIN\web\app\(dashboar
+d)\dashboard\page.tsx[0m:144:1]
+ [2m141[0m |   )
+ [2m142[0m | }
+ [2m143[0m | 
+ [2m144[0m |     </div>
+     : [35;1m     ^[0m
+ [2m145[0m |   )
+ [2m146[0m | }
+     `----
+  [31mx[0m Expression expected
+     ,-[[36;1;4mD:\Antigravity\NEXFIN\web\app\(dashboar
+d)\dashboard\page.tsx[0m:145:1]
+ [2m142[0m | }
+ [2m143[0m | 
+ [2m144[0m |     </div>
+ [2m145[0m |   )
+     : [35;1m  ^[0m
+ [2m146[0m | }
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/(dashboard)/dashboard/page.tsx
+ Ô¿» ./app/(dashboard)/dashboard/page.tsx
+Error:   [31mx[0m Expression expected
+     ,-[[36;1;4mD:\Antigravity\NEXFIN\web\app\(dashboar
+d)\dashboard\page.tsx[0m:144:1]
+ [2m141[0m |   )
+ [2m142[0m | }
+ [2m143[0m | 
+ [2m144[0m |     </div>
+     : [35;1m     ^[0m
+ [2m145[0m |   )
+ [2m146[0m | }
+     `----
+  [31mx[0m Expression expected
+     ,-[[36;1;4mD:\Antigravity\NEXFIN\web\app\(dashboar
+d)\dashboard\page.tsx[0m:145:1]
+ [2m142[0m | }
+ [2m143[0m | 
+ [2m144[0m |     </div>
+ [2m145[0m |   )
+     : [35;1m  ^[0m
+ [2m146[0m | }
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/(dashboard)/dashboard/page.tsx
+ GET /dashboard 500 in 6781ms
+ GET /login 500 in 1858ms
+ GET /dashboard 500 in 184ms
+ GET /login 500 in 34ms
+ GET /dashboard 500 in 39ms
+ GET /login 500 in 18ms
+ GET /dashboard 500 in 17ms
+ Ô£ô Compiled /_error in 1653ms (1642 modules)
+ ÔÜá Fast Refresh had to perform a full reload due to a 
+runtime error.
+ ÔÜá Fast Refresh had to perform a full reload due to a 
+runtime error.
+ GET /_next/static/webpack/785f490dc3f39993.webpack.hot-update.json 404 in 1773ms
+ GET /_next/static/webpack/785f490dc3f39993.webpack.hot-update.json 404 in 1774ms
+ GET /login 200 in 114ms
+ GET /dashboard 200 in 121ms
+ GET /dashboard 200 in 38ms
+ GET /login 200 in 15ms
+ GET /dashboard 200 in 16ms
+ GET /login 200 in 12ms

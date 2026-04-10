@@ -1,0 +1,35 @@
+﻿node.exe : Loaded Prisma config from prisma.config.ts.
+No linha:1 caractere:1
++ & "D:\/node.exe" 
+"D:\/node_modules/npm/bin/npx-cli.js" prisma validat ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Loaded Pri 
+   sma c...isma.config.ts.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+Prisma schema loaded from prisma\schema.prisma.
+
+Prisma schema warning:
+- Preview feature "driverAdapters" is deprecated. The 
+functionality can be used without specifying it as a 
+preview feature.
+
+Error: Prisma schema validation - (validate wasm)
+Error code: P1012
+[1;91merror[0m: [1mError parsing attribute 
+"@default": Expected an enum value, but found 
+`"VIEWER"`.[0m
+  [1;94m-->[0m  [4mprisma\schema.prisma:20[0m
+[1;94m   | [0m
+[1;94m19 | [0m  mfaEnabled      Boolean          
+@default(false) @map("mfa_enabled")
+[1;94m20 | [0m  role            UserRole         
+[1;91m@default("VIEWER")[0m
+[1;94m   | [0m
+
+Validation Error Count: 1
+[Context: validate]
+
+Prisma CLI Version : 7.6.0

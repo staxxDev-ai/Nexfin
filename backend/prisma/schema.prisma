@@ -1,0 +1,169 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id                          String           @id @default(uuid())
+  auth0Id                     String?          @unique @map("auth0_id")
+  email                       String           @unique
+  passwordHash                String?          @map("password_hash")
+  name                        String
+  avatarUrl                   String?          @map("avatar_url")
+  encryptedCpf                String?          @map("encrypted_cpf")
+  phone                       String?
+  mfaEnabled                  Boolean          @default(false) @map("mfa_enabled")
+  role                        UserRole         @default(VIEWER)
+  isActive                    Boolean          @default(true) @map("is_active")
+  createdAt                   DateTime         @default(now()) @map("created_at")
+  updatedAt                   DateTime         @updatedAt @map("updated_at")
+  lastLoginAt                 DateTime?        @map("last_login_at")
+  accounts                    Account[]
+  aiThreads                   AiThread[]
+  encryptedPluggyClientId     String?          @map("encrypted_pluggy_client_id")
+  encryptedPluggyClientSecret String?          @map("encrypted_pluggy_client_secret")
+  passwordResetToken          String?          @map("password_reset_token")
+  passwordResetExpires        DateTime?        @map("password_reset_expires")
+  skillPlugins                SkillPlugin[]
+
+  @@map("users")
+}
+
+model Account {
+  id                     String        @id @default(uuid())
+  userId                 String        @map("user_id")
+  bankName               String        @map("bank_name")
+  bankCode               String        @map("bank_code")
+  bankColor              String?       @map("bank_color")
+  bankLogoUrl            String?       @map("bank_logo_url")
+  accountType            AccountType   @map("account_type")
+  accountNumber          String?       @map("account_number")
+  agencyNumber           String?       @map("agency_number")
+  encryptedAccountNumber String?       @map("encrypted_account_number")
+  encryptedAgencyNumber  String?       @map("encrypted_agency_number")
+  encryptedAccessToken   String?       @map("encrypted_access_token")
+  pluggyItemId           String?       @map("pluggy_item_id")
+  balance                Float         @default(0)
+  creditLimit            Float?        @map("credit_limit")
+  availableLimit         Float?        @map("available_limit")
+  currentInvoice         Float?        @map("current_invoice")
+  currency               String        @default("BRL")
+  isConnected            Boolean       @default(false) @map("is_connected")
+  lastSyncAt             DateTime?     @map("last_sync_at")
+  createdAt              DateTime      @default(now()) @map("created_at")
+  updatedAt              DateTime      @updatedAt @map("updated_at")
+  user                   User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  investments            Investment[]
+  transactions           Transaction[]
+
+  @@map("accounts")
+}
+
+model AiThread {
+  id        String      @id @default(uuid())
+  userId    String      @map("user_id")
+  title     String      @default("Nova Conversa")
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages  AiMessage[]
+
+  @@map("ai_threads")
+}
+
+model AiMessage {
+  id        String   @id @default(uuid())
+  threadId  String   @map("thread_id")
+  role      String   // 'user' | 'assistant'
+  content   String
+  createdAt DateTime @default(now()) @map("created_at")
+  thread    AiThread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+
+  @@map("ai_messages")
+}
+
+model SkillPlugin {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  name        String
+  description String?
+  version     String   @default("1.0.0")
+  filename    String
+  filePath    String   @map("file_path")
+  fileHash    String   @map("file_hash")
+  isActive    Boolean  @default(true) @map("is_active")
+  assignedTo  String?  @map("assigned_to")
+  apiKeys     String?  @map("api_keys")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("skill_plugins")
+}
+
+model Transaction {
+  id                   String   @id @default(uuid())
+  accountId            String   @map("account_id")
+  encryptedDescription String   @map("encrypted_description")
+  amount               Float
+  date                 DateTime
+  category             String?
+  type                 String   @map("type")
+  status               String   @default("COMPLETED") @map("status")
+  ledgerHash           String?  @map("ledger_hash")
+  createdAt            DateTime @default(now()) @map("created_at")
+  account              Account  @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@index([accountId])
+  @@index([date])
+  @@map("transactions")
+}
+
+model Investment {
+  id         String   @id @default(uuid())
+  accountId  String   @map("account_id")
+  name       String
+  type       String
+  subtype    String?
+  balance    Float
+  currency   String   @default("BRL")
+  annualRate Float?   @map("annual_rate")
+  lastSyncAt DateTime @default(now()) @map("last_sync_at")
+  account    Account  @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@index([accountId])
+  @@map("investments")
+}
+
+model LedgerHistory {
+  id         String   @id @default(uuid())
+  eventType  String   @map("event_type")
+  entityType String   @map("entity_type")
+  entityId   String   @map("entity_id")
+  userId     String   @map("user_id")
+  amount     Float?
+  currency   String   @default("BRL")
+  payload    String
+  ipAddress  String?  @map("ip_address")
+  userAgent  String?  @map("user_agent")
+  checksum   String
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@map("ledger_history")
+}
+
+enum UserRole {
+  ADMIN
+  ANALYST
+  VIEWER
+}
+
+enum AccountType {
+  CHECKING
+  SAVINGS
+  INVESTMENT
+  CREDIT
+}
