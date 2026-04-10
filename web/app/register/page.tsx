@@ -37,6 +37,9 @@ export default function RegisterPage() {
     setMounted(true)
   }, [router])
 
+  const RECAPTCHA_SITE_KEY = "6LcZF6osAAAAAA9MzMe8QBSZ0LLjrlrvhJVVxtgr";
+  // Build Timestamp: 2026-04-10 15:05 (Force Deploy)
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setErrors({})
