@@ -63,8 +63,8 @@ export default function InvestmentsPage() {
           <Loader2 size={48} />
         </motion.div>
         <div style={{ textAlign: 'center' }}>
-          <h2 style={{ fontSize: 18, fontWeight: 800, color: '#fff', marginBottom: 8, letterSpacing: '0.05em' }}>CONECTANDO AO MERCADO</h2>
-          <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 13 }}>Sincronizando seus ativos em tempo real...</p>
+          <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-primary)', marginBottom: 8, letterSpacing: '0.05em' }}>CONECTANDO AO MERCADO</h2>
+          <p style={{ color: 'var(--text-secondary)', fontSize: 13 }}>Sincronizando seus ativos em tempo real...</p>
         </div>
       </div>
     )
@@ -88,14 +88,14 @@ export default function InvestmentsPage() {
           <h1 style={{ fontSize: 32, fontWeight: 800, letterSpacing: '-0.02em', marginBottom: 8 }}>
             Seu Futuro em Dados
           </h1>
-          <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 16 }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: 16 }}>
             Visão consolidada de todas as suas posições e rendimentos.
           </p>
         </div>
 
         <div style={{ textAlign: 'right' }}>
-           <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', fontWeight: 700, marginBottom: 4 }}>PATRIMÔNIO SOB GESTÃO</p>
-           <h2 style={{ fontSize: 36, fontWeight: 900, color: '#fff', letterSpacing: '-0.03em' }}>
+           <p style={{ fontSize: 12, color: 'var(--text-secondary)', fontWeight: 700, marginBottom: 4 }}>PATRIMÔNIO SOB GESTÃO</p>
+           <h2 style={{ fontSize: 36, fontWeight: 900, color: 'var(--text-primary)', letterSpacing: '-0.03em' }}>
              {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(totalBalance)}
            </h2>
         </div>
@@ -103,12 +103,12 @@ export default function InvestmentsPage() {
 
       {investments.length === 0 ? (
         <div style={{ 
-          background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)',
+          background: 'var(--bg-card)', border: '1px solid var(--border-color)',
           borderRadius: 4, padding: '60px 40px', textAlign: 'center'
         }}>
-           <PieChart size={48} style={{ color: 'rgba(255,255,255,0.1)', marginBottom: 24 }} />
-           <h3 style={{ fontSize: 18, color: '#fff', marginBottom: 12 }}>Nenhum investimento detectado</h3>
-           <p style={{ color: 'rgba(255,255,255,0.4)', maxWidth: 400, margin: '0 auto' }}>
+           <PieChart size={48} style={{ color: 'var(--border-color)', marginBottom: 24 }} />
+           <h3 style={{ fontSize: 18, color: 'var(--text-primary)', marginBottom: 12 }}>Nenhum investimento detectado</h3>
+           <p style={{ color: 'var(--text-secondary)', maxWidth: 400, margin: '0 auto' }}>
              Vincule contas de corretoras ou bancos com investimentos ativos para visualizar seu portfólio aqui.
            </p>
         </div>
@@ -121,8 +121,8 @@ export default function InvestmentsPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.05 }}
               style={{
-                background: 'rgba(255,255,255,0.02)',
-                border: '1px solid rgba(255,255,255,0.05)',
+                background: 'var(--bg-card)',
+                border: '1px solid var(--border-color)',
                 borderRadius: 4,
                 padding: '24px',
                 position: 'relative',
@@ -136,10 +136,10 @@ export default function InvestmentsPage() {
               
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>
                 <div>
-                   <h4 style={{ fontSize: 11, fontWeight: 800, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.1em', marginBottom: 4 }}>
+                   <h4 style={{ fontSize: 11, fontWeight: 800, color: 'var(--text-secondary)', letterSpacing: '0.1em', marginBottom: 4 }}>
                      {inv.type.replace('_', ' ')} / {inv.subtype?.replace('_', ' ') || 'ATIVO'}
                    </h4>
-                   <h3 style={{ fontSize: 18, fontWeight: 700, color: '#fff' }}>{inv.name}</h3>
+                   <h3 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-primary)' }}>{inv.name}</h3>
                 </div>
                 <div style={{ 
                   width: 32, height: 32, borderRadius: 6, background: inv.bankColor || '#3b82f6',
@@ -151,7 +151,7 @@ export default function InvestmentsPage() {
               </div>
 
               <div style={{ marginBottom: 24 }}>
-                <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', fontWeight: 500 }}>Saldo Atual</span>
+                <span style={{ fontSize: 12, color: 'var(--text-secondary)', fontWeight: 500 }}>Saldo Atual</span>
                 <div style={{ fontSize: 24, fontWeight: 800, color: '#10b981', marginTop: 4 }}>
                   {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: inv.currency || 'BRL' }).format(inv.balance)}
                 </div>
@@ -160,16 +160,16 @@ export default function InvestmentsPage() {
               <div style={{ display: 'flex', gap: 16, borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: 16 }}>
                  {inv.annualRate && (
                    <div style={{ flex: 1 }}>
-                     <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', fontWeight: 700 }}>RENT. ANUAL</span>
-                     <div style={{ fontSize: 13, color: '#fff', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 4 }}>
+                     <span style={{ fontSize: 10, color: 'var(--text-secondary)', fontWeight: 700 }}>RENT. ANUAL</span>
+                     <div style={{ fontSize: 13, color: 'var(--text-primary)', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 4 }}>
                         <ArrowUpRight size={14} style={{ color: '#10b981' }} />
                         {(inv.annualRate * 100).toFixed(2)}%
                      </div>
                    </div>
                  )}
                  <div style={{ flex: 1 }}>
-                    <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', fontWeight: 700 }}>INSTITUIÇÃO</span>
-                    <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', fontWeight: 600 }}>{inv.bank || 'Banco'}</div>
+                    <span style={{ fontSize: 10, color: 'var(--text-secondary)', fontWeight: 700 }}>INSTITUIÇÃO</span>
+                    <div style={{ fontSize: 13, color: 'var(--text-secondary)', fontWeight: 600 }}>{inv.bank || 'Banco'}</div>
                  </div>
               </div>
             </motion.div>
@@ -185,8 +185,8 @@ export default function InvestmentsPage() {
       }}>
          <ShieldCheck size={24} style={{ color: '#3b82f6' }} />
          <div>
-            <h5 style={{ fontSize: 14, fontWeight: 700, color: '#fff' }}>Dados criptografados e protegidos</h5>
-            <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>
+            <h5 style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)' }}>Dados criptografados e protegidos</h5>
+            <p style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
               Suas informações de investimentos são sincronizadas via TLS 1.3 e armazenadas em ambiente seguro.
             </p>
          </div>

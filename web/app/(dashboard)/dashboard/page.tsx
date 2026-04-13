@@ -55,6 +55,8 @@ export default function DashboardPage() {
       
       if (!res.ok) {
         if (res.status === 401) {
+          localStorage.removeItem('nexfin_auth')
+          localStorage.removeItem('nexfin_user')
           router.push('/login')
           return
         }
@@ -139,7 +141,7 @@ export default function DashboardPage() {
           <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 8, letterSpacing: '-0.02em' }}>
             Olá, {userName}
           </h1>
-          <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
             Bem-vindo ao seu centro de controle financeiro.
             {syncing && (
               <span style={{ 
@@ -171,7 +173,7 @@ export default function DashboardPage() {
 
       {/* Grid de Saldos Realistas */}
       {loading ? (
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 200, gap: 12, color: 'rgba(255,255,255,0.3)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 200, gap: 12, color: 'var(--text-secondary)' }}>
           <Loader2 size={24} style={{ animation: 'spin 1s linear infinite' }} />
           Carregando seus saldos...
         </div>
@@ -187,19 +189,19 @@ export default function DashboardPage() {
           animate={{ opacity: 1 }}
           style={{
             textAlign: 'center', padding: '60px 40px',
-            background: 'rgba(255,255,255,0.02)',
-            border: '1px dashed rgba(255,255,255,0.1)',
+            background: 'var(--bg-card)',
+            border: '1px dashed var(--border-color)',
             borderRadius: 12, marginBottom: 48
           }}
         >
-          <Building2 size={40} color="rgba(255,255,255,0.1)" style={{ margin: '0 auto 20px' }} />
+          <Building2 size={40} color="var(--border-color)" style={{ margin: '0 auto 20px' }} />
           <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 8 }}>Nenhuma conta vinculada</h3>
-          <p style={{ color: 'rgba(255,255,255,0.35)', marginBottom: 24, fontSize: 14 }}>
+          <p style={{ color: 'var(--text-secondary)', marginBottom: 24, fontSize: 14 }}>
             Conecte seus bancos para ver seus saldos consolidados aqui.
           </p>
           <button
             onClick={() => router.push('/accounts')}
-            style={{ padding: '10px 24px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, color: '#fff', cursor: 'pointer' }}
+            style={{ padding: '10px 24px', background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: 8, color: 'var(--text-primary)', cursor: 'pointer' }}
           >
             Configurar Conexão
           </button>
@@ -213,13 +215,13 @@ export default function DashboardPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               style={{
-                background: 'rgba(255,255,255,0.03)',
-                border: '1px solid rgba(255,255,255,0.08)',
+                background: 'var(--bg-card)',
+                border: '1px solid var(--border-color)',
                 borderRadius: 12,
                 padding: '24px',
                 position: 'relative',
                 overflow: 'hidden',
-                boxShadow: '0 20px 40px rgba(0,0,0,0.1)'
+                boxShadow: 'var(--shadow-md)'
               }}
             >
               <div style={{
@@ -247,14 +249,14 @@ export default function DashboardPage() {
                   </div>
                 </div>
 
-                <h3 style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.35)', marginBottom: 8, letterSpacing: '0.1em' }}>
+                <h3 style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)', marginBottom: 8, letterSpacing: '0.1em' }}>
                   {balance.label}
                 </h3>
                 
                 <div style={{ 
                   fontSize: 28, 
                   fontWeight: 800, 
-                  color: '#fff',
+                  color: 'var(--text-primary)',
                   transition: 'all 0.3s ease'
                 }}>
                   {maskValue(balance.value, isPrivate)}
@@ -276,8 +278,9 @@ export default function DashboardPage() {
               
               return (
                 <div key={acc.id} style={{
-                  background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.05)',
-                  borderRadius: 12, padding: '20px', display: 'flex', flexDirection: 'column', gap: 12
+                  background: 'var(--bg-card)', border: '1px solid var(--border-color)',
+                  borderRadius: 12, padding: '20px', display: 'flex', flexDirection: 'column', gap: 12,
+                  boxShadow: 'var(--shadow-sm)'
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                     <div style={{ 
@@ -287,19 +290,19 @@ export default function DashboardPage() {
                       {acc.bankName[0]}
                     </div>
                     <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: 14, fontWeight: 700 }}>{acc.bankName}</div>
-                      <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', fontWeight: 600 }}>
+                      <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)' }}>{acc.bankName}</div>
+                      <div style={{ fontSize: 10, color: 'var(--text-secondary)', fontWeight: 600 }}>
                         {acc.accountType === 'CREDIT' ? 'CARTÃO DE CRÉDITO' : 'CONTA CORRENTE'}
                       </div>
                     </div>
                   </div>
 
                   <div>
-                    <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', fontWeight: 600, marginBottom: 4 }}>
+                    <div style={{ fontSize: 11, color: 'var(--text-secondary)', fontWeight: 600, marginBottom: 4 }}>
                       {acc.accountType === 'CREDIT' ? 'FATURA ATUAL' : 'SALDO DISPONÍVEL'}
                     </div>
                     <div style={{ 
-                      fontSize: 20, fontWeight: 800, color: '#fff'
+                      fontSize: 20, fontWeight: 800, color: 'var(--text-primary)'
                     }}>
                       {maskValue(new Intl.NumberFormat('pt-BR', { style: 'currency', currency: acc.currency }).format(acc.balance), isPrivate)}
                     </div>
@@ -309,13 +312,13 @@ export default function DashboardPage() {
                     <div style={{ marginTop: 8 }}>
                       {!isPrivate && (
                         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, fontWeight: 700, marginBottom: 6 }}>
-                          <span style={{ color: 'rgba(255,255,255,0.3)' }}>LIMITE UTILIZADO</span>
-                          <span style={{ color: '#fff' }}>
+                          <span style={{ color: 'var(--text-secondary)' }}>LIMITE UTILIZADO</span>
+                          <span style={{ color: 'var(--text-primary)' }}>
                             {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: acc.currency }).format(usedLimit)}
                           </span>
                         </div>
                       )}
-                      <div style={{ height: 4, width: '100%', background: 'rgba(255,255,255,0.05)', borderRadius: 2, overflow: 'hidden' }}>
+                      <div style={{ height: 4, width: '100%', background: 'var(--bg-surface)', borderRadius: 2, overflow: 'hidden' }}>
                         <motion.div 
                           initial={{ width: 0 }}
                           animate={{ width: `${limitPerc}%` }}
@@ -347,13 +350,14 @@ export default function DashboardPage() {
         ].map((item, idx) => (
           <motion.div
             key={item.label}
-            whileHover={{ y: -4, background: 'rgba(255,255,255,0.06)' }}
+            whileHover={{ y: -4, background: 'var(--bg-surface)' }}
             onClick={() => router.push(item.route)}
             style={{
-              padding: '24px', background: 'rgba(255,255,255,0.04)',
-              border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12,
+              padding: '24px', background: 'var(--bg-card)',
+              border: '1px solid var(--border-color)', borderRadius: 12,
               cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 16,
-              transition: 'all 0.3s'
+              transition: 'all 0.3s',
+              boxShadow: 'var(--shadow-sm)'
             }}
           >
             <div style={{ 

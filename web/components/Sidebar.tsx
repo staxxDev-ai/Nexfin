@@ -44,10 +44,10 @@ export default function Sidebar() {
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       style={{
         height: '100vh',
-        background: 'rgba(255, 255, 255, 0.03)',
+        background: 'var(--bg-card)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
-        borderRight: '1px solid rgba(255, 255, 255, 0.08)',
+        borderRight: '1px solid var(--border-color)',
         display: 'flex',
         flexDirection: 'column',
         padding: '24px 12px',
@@ -55,7 +55,7 @@ export default function Sidebar() {
         left: 0,
         top: 0,
         zIndex: 100,
-        boxShadow: '20px 0 50px rgba(0,0,0,0.2)'
+        boxShadow: 'var(--shadow-md)'
       }}
     >
       {/* Logo Curta / Logo Expandida */}
@@ -77,7 +77,7 @@ export default function Sidebar() {
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -10 }}
-                style={{ color: '#fff', fontWeight: 700, fontSize: 18, letterSpacing: '0.05em', whiteSpace: 'nowrap' }}
+                style={{ color: 'var(--text-primary)', fontWeight: 700, fontSize: 18, letterSpacing: '0.05em', whiteSpace: 'nowrap' }}
               >
                 NEXFIN
               </motion.span>
@@ -107,7 +107,7 @@ export default function Sidebar() {
                 overflow: 'hidden'
               }}
             >
-              <item.icon size={22} color={isActive ? '#60a5fa' : 'rgba(255,255,255,0.5)'} />
+              <item.icon size={22} color={isActive ? '#60a5fa' : 'var(--text-secondary)'} />
               
               <AnimatePresence>
                 {isExpanded && (
@@ -116,7 +116,7 @@ export default function Sidebar() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -10 }}
                     style={{ 
-                      marginLeft: 16, color: isActive ? '#fff' : 'rgba(255,255,255,0.6)', 
+                      marginLeft: 16, color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)', 
                       fontSize: 14, fontWeight: isActive ? 600 : 400, whiteSpace: 'nowrap' 
                     }}
                   >

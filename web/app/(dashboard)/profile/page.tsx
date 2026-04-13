@@ -144,7 +144,7 @@ export default function ProfilePage() {
         onClick={() => router.push('/dashboard')}
         style={{
           display: 'flex', alignItems: 'center', gap: 8, background: 'none',
-          border: 'none', color: 'rgba(255,255,255,0.4)', fontSize: 13,
+          border: 'none', color: 'var(--text-secondary)', fontSize: 13,
           fontWeight: 600, cursor: 'pointer', marginBottom: 24, padding: 0
         }}
       >
@@ -157,13 +157,13 @@ export default function ProfilePage() {
         <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 8, letterSpacing: '-0.02em' }}>
           Personalização do Perfil
         </h1>
-        <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 16 }}>
+        <p style={{ color: 'var(--text-secondary)', fontSize: 16 }}>
           Gerencie suas informações e identidade na plataforma.
         </p>
       </div>
 
       {loading ? (
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 400, color: 'rgba(255,255,255,0.2)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 400, color: 'var(--border-color)' }}>
           <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}>
             <User size={40} />
           </motion.div>
@@ -183,7 +183,7 @@ export default function ProfilePage() {
             >
               <div style={{ 
                 width: '100%', height: '100%', borderRadius: '50%', overflow: 'hidden', 
-                background: '#050d1e', position: 'relative',
+                background: 'var(--bg-surface)', position: 'relative',
                 display: 'flex', alignItems: 'center', justifyContent: 'center'
               }}>
                 {avatar ? (
@@ -211,23 +211,23 @@ export default function ProfilePage() {
                 <Camera size={16} color="#fff" />
               </div>
             </div>
-            <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', fontWeight: 700, letterSpacing: '0.05em' }}>
+            <span style={{ fontSize: 12, color: 'var(--text-secondary)', fontWeight: 700, letterSpacing: '0.05em' }}>
               CLIQUE PARA ALTERAR FOTO
             </span>
           </div>
 
         {/* Lado Direito: Formulário */}
         <div style={{
-          background: 'rgba(255,255,255,0.02)',
-          border: '1px solid rgba(255,255,255,0.08)',
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border-color)',
           borderRadius: 4, padding: '32px',
-          boxShadow: '0 20px 40px rgba(0,0,0,0.1)'
+          boxShadow: 'var(--shadow-md)'
         }}>
           <div style={{ display: 'grid', gap: 24 }}>
             
             {/* Campo: Nome */}
             <div>
-              <label style={{ display: 'block', fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.3)', marginBottom: 8, letterSpacing: '0.1em' }}>
+              <label style={{ display: 'block', fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)', marginBottom: 8, letterSpacing: '0.1em' }}>
                 NOME COMPLETO
               </label>
               <div style={{ position: 'relative' }}>
@@ -238,8 +238,8 @@ export default function ProfilePage() {
                   onChange={(e) => setName(e.target.value)} 
                   placeholder="Seu nome"
                   style={{
-                    width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
-                    borderRadius: 12, padding: '14px 16px 14px 44px', color: '#fff', fontSize: 14, outline: 'none',
+                    width: '100%', background: 'var(--bg-surface)', border: '1px solid var(--border-color)',
+                    borderRadius: 12, padding: '14px 16px 14px 44px', color: 'var(--text-primary)', fontSize: 14, outline: 'none',
                     transition: 'all 0.2s', boxSizing: 'border-box'
                   }}
                 />
@@ -249,7 +249,7 @@ export default function ProfilePage() {
             {/* Linha: Email e Idade */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 120px', gap: 20 }}>
               <div>
-                <label style={{ display: 'block', fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.3)', marginBottom: 8, letterSpacing: '0.1em' }}>
+                <label style={{ display: 'block', fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)', marginBottom: 8, letterSpacing: '0.1em' }}>
                   E-MAIL CORPORATIVO
                 </label>
                 <div style={{ position: 'relative' }}>
@@ -259,15 +259,15 @@ export default function ProfilePage() {
                     value={email} 
                     readOnly
                     style={{
-                      width: '100%', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)',
-                      borderRadius: 12, padding: '14px 16px 14px 44px', color: 'rgba(255,255,255,0.4)', fontSize: 14,
+                      width: '100%', background: 'var(--bg-surface)', border: '1px solid var(--border-color)',
+                      borderRadius: 12, padding: '14px 16px 14px 44px', color: 'var(--text-secondary)', fontSize: 14,
                       outline: 'none', boxSizing: 'border-box', cursor: 'not-allowed'
                     }}
                   />
                 </div>
               </div>
               <div>
-                <label style={{ display: 'block', fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.3)', marginBottom: 8, letterSpacing: '0.1em' }}>
+                <label style={{ display: 'block', fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)', marginBottom: 8, letterSpacing: '0.1em' }}>
                   IDADE
                 </label>
                 <div style={{ position: 'relative' }}>
@@ -277,8 +277,8 @@ export default function ProfilePage() {
                     value={age} 
                     onChange={(e) => setAge(e.target.value)} 
                     style={{
-                      width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
-                      borderRadius: 12, padding: '14px 16px 14px 44px', color: '#fff', fontSize: 14, outline: 'none',
+                      width: '100%', background: 'var(--bg-surface)', border: '1px solid var(--border-color)',
+                      borderRadius: 12, padding: '14px 16px 14px 44px', color: 'var(--text-primary)', fontSize: 14, outline: 'none',
                       transition: 'all 0.2s', boxSizing: 'border-box'
                     }}
                   />
@@ -288,7 +288,7 @@ export default function ProfilePage() {
 
             {/* Campo: Bio */}
             <div>
-              <label style={{ display: 'block', fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.3)', marginBottom: 8, letterSpacing: '0.1em' }}>
+              <label style={{ display: 'block', fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)', marginBottom: 8, letterSpacing: '0.1em' }}>
                 BIOGRAFIA / CARGO
               </label>
               <textarea 
@@ -296,8 +296,8 @@ export default function ProfilePage() {
                 onChange={(e) => setBio(e.target.value)} 
                 rows={3}
                 style={{
-                  width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
-                  borderRadius: 12, padding: '14px 16px', color: '#fff', fontSize: 14, outline: 'none',
+                  width: '100%', background: 'var(--bg-surface)', border: '1px solid var(--border-color)',
+                  borderRadius: 12, padding: '14px 16px', color: 'var(--text-primary)', fontSize: 14, outline: 'none',
                   transition: 'all 0.2s', boxSizing: 'border-box', fontFamily: 'inherit', resize: 'none'
                 }}
               />

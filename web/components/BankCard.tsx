@@ -40,7 +40,7 @@ export default function BankCard({
     <motion.div
       whileHover={{ y: -5, boxShadow: `0 20px 40px ${color}15` }}
       style={{
-        background: 'rgba(255, 255, 255, 0.03)',
+        background: 'var(--bg-card)',
         border: `1px solid ${color}30`,
         borderRadius: 4,
         padding: '24px',
@@ -71,17 +71,17 @@ export default function BankCard({
           }}>
             {bankName.substring(0, 1)}
           </div>
-          <h3 style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.05em', color: '#fff' }}>
+          <h3 style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.05em', color: 'var(--text-primary)' }}>
             {bankName.toUpperCase()}
           </h3>
         </div>
         <div 
           onClick={goToStatement}
           style={{ padding: 4, cursor: 'pointer', borderRadius: 4, transition: 'background 0.2s' }}
-          onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+          onMouseEnter={(e) => e.currentTarget.style.background = 'var(--border-color)'}
           onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
         >
-          <ExternalLink size={14} style={{ color: 'rgba(255,255,255,0.4)' }} />
+          <ExternalLink size={14} style={{ color: 'var(--text-secondary)' }} />
         </div>
       </div>
 
@@ -92,11 +92,11 @@ export default function BankCard({
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
             <Wallet size={12} color={color} />
-            <span style={{ fontSize: 10, fontWeight: 700, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.05em' }}>
+            <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-secondary)', letterSpacing: '0.05em' }}>
               SALDO EM CONTA
             </span>
           </div>
-          <div style={{ fontSize: 20, fontWeight: 800, color: '#fff' }}>
+          <div style={{ fontSize: 20, fontWeight: 800, color: 'var(--text-primary)' }}>
             {maskValue(balance, isPrivate)}
           </div>
         </div>
@@ -106,7 +106,7 @@ export default function BankCard({
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
               <TrendingDown size={12} color="#ef4444" />
-              <span style={{ fontSize: 9, fontWeight: 700, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.05em' }}>
+              <span style={{ fontSize: 9, fontWeight: 700, color: 'var(--text-secondary)', letterSpacing: '0.05em' }}>
                 VALOR GASTO
               </span>
             </div>
@@ -117,7 +117,7 @@ export default function BankCard({
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
               <TrendingUp size={12} color="#22c55e" />
-              <span style={{ fontSize: 9, fontWeight: 700, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.05em' }}>
+              <span style={{ fontSize: 9, fontWeight: 700, color: 'var(--text-secondary)', letterSpacing: '0.05em' }}>
                 INVESTIDO
               </span>
             </div>
@@ -130,8 +130,8 @@ export default function BankCard({
 
       {/* Footer: Sincronização */}
       <div style={{ 
-        marginTop: 4, paddingTop: 16, borderTop: '1px solid rgba(255,255,255,0.05)',
-        fontSize: 10, color: 'rgba(255,255,255,0.2)', fontWeight: 600,
+        marginTop: 4, paddingTop: 16, borderTop: '1px solid var(--border-color)',
+        fontSize: 10, color: 'var(--text-secondary)', fontWeight: 600,
         display: 'flex', justifyContent: 'space-between', position: 'relative', zIndex: 1
       }}>
         <span>OPEN FINANCE ATIVO</span>

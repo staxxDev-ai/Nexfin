@@ -31,7 +31,7 @@ export default function DashboardLayout({
       <SocketProvider>
       {!mounted || !isAuth ? (
         <div style={{
-          height: '100vh', background: '#050d1e', display: 'flex', 
+          height: '100vh', background: 'var(--bg-primary)', display: 'flex', 
           alignItems: 'center', justifyContent: 'center'
         }}>
           <motion.div
@@ -43,20 +43,21 @@ export default function DashboardLayout({
       ) : (
         <div style={{
           minHeight: '100vh',
-          background: '#050d1e',
-          // FUNDO: RADIAL GLOW + GRID GEOMÉTRICA (identidade da tela de login)
+          background: 'var(--bg-primary)',
+          // FUNDO: RADIAL GLOW + GRID GEOMÉTRICA
           backgroundImage: `
-            linear-gradient(to right, rgba(59, 130, 246, 0.04) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(59, 130, 246, 0.04) 1px, transparent 1px),
+            linear-gradient(to right, var(--nav-border) 1px, transparent 1px),
+            linear-gradient(to bottom, var(--nav-border) 1px, transparent 1px),
             radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.06) 0px, transparent 50%),
             radial-gradient(at 100% 0%, rgba(29, 78, 216, 0.06) 0px, transparent 50%)
           `,
           backgroundSize: '40px 40px, 40px 40px, 100% 100%, 100% 100%',
           display: 'flex',
           flexDirection: 'column',
-          color: '#fff',
+          color: 'var(--text-primary)',
           position: 'relative',
-          overflowX: 'hidden'
+          overflowX: 'hidden',
+          transition: 'all 0.3s ease'
         }}>
           
           {/* Navegação Superior Centralizada */}

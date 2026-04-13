@@ -12,9 +12,12 @@ import {
   LogOut,
   MessageSquare,
   Eye,
-  EyeOff
+  EyeOff,
+  Sun,
+  Moon
 } from 'lucide-react'
 import { usePrivacy } from '@/context/PrivacyContext'
+import { useTheme } from '@/context/ThemeContext'
 
 const MENU_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
@@ -29,6 +32,7 @@ export default function TopNav() {
   const router = useRouter()
   const pathname = usePathname()
   const { isPrivate, togglePrivacy } = usePrivacy()
+  const { theme, toggleTheme } = useTheme()
   const [avatar, setAvatar] = useState<string | null>(null)
   const [name, setName] = useState('')
 
@@ -101,14 +105,14 @@ export default function TopNav() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
         style={{
-          background: 'rgba(255, 255, 255, 0.03)',
+          background: 'var(--nav-bg)',
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
-          border: '1px solid rgba(255, 255, 255, 0.08)',
+          border: '1px solid var(--nav-border)',
           borderRadius: 4, // Design Square
           padding: '6px 20px',
           display: 'flex', alignItems: 'center', gap: 12,
-          boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
+          boxShadow: 'var(--shadow-lg)'
         }}
       >
         {/* Foto do Usuário / Iniciais - Acesso ao Perfil */}
@@ -149,11 +153,12 @@ export default function TopNav() {
                   background: isActive ? 'rgba(37, 99, 235, 0.1)' : 'transparent'
                 }}
               >
-                <item.icon size={18} color={isActive ? '#60a5fa' : 'rgba(255,255,255,0.4)'} />
+                <item.icon size={18} color={isActive ? '#3b82f6' : 'var(--text-secondary)'} />
                 <span style={{ 
                   fontSize: 13, fontWeight: isActive ? 700 : 500, 
-                  color: isActive ? '#fff' : 'rgba(255,255,255,0.6)',
-                  letterSpacing: '0.02em' 
+                  color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
+                  letterSpacing: '0.02em',
+                  transition: 'color 0.2s'
                 }}>
                   {item.label}
                 </span>
@@ -181,12 +186,12 @@ export default function TopNav() {
             style={{
               padding: '10px 16px', borderRadius: 4, cursor: 'pointer',
               display: 'flex', alignItems: 'center', gap: 10,
-              background: isPrivate ? 'rgba(59, 130, 246, 0.15)' : 'transparent',
-              border: 'none', color: isPrivate ? '#60a5fa' : 'rgba(255,255,255,0.6)',
+              background: isPrivate ? 'rgba(59,130,246,0.1)' : 'transparent',
+              border: 'none', color: isPrivate ? '#3b82f6' : 'var(--text-secondary)',
               transition: 'all 0.2s',
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.05)')}
-            onMouseLeave={(e) => (e.currentTarget.style.background = isPrivate ? 'rgba(59, 130, 246, 0.15)' : 'transparent')}
+            onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--nav-border)')}
+            onMouseLeave={(e) => (e.currentTarget.style.background = isPrivate ? 'rgba(59,130,246,0.1)' : 'transparent')}
           >
             {isPrivate ? <Eye size={18} /> : <EyeOff size={18} />}
             <span style={{ fontSize: 13, fontWeight: 600 }}>
@@ -195,8 +200,29 @@ export default function TopNav() {
           </button>
         </div>
 
+        {/* Botão de Tema */}
+        <div style={{ marginLeft: 4 }}>
+          <button
+            onClick={toggleTheme}
+            style={{
+              padding: '10px 16px', borderRadius: 4, cursor: 'pointer',
+              display: 'flex', alignItems: 'center', gap: 10,
+              background: 'transparent',
+              border: 'none', color: 'var(--text-secondary)',
+              transition: 'all 0.2s',
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--nav-border)')}
+            onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+          >
+            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            <span style={{ fontSize: 13, fontWeight: 600 }}>
+              {theme === 'dark' ? 'Claro' : 'Escuro'}
+            </span>
+          </button>
+        </div>
+
         {/* Divisor */}
-        <div style={{ width: 1, height: 24, background: 'rgba(255,255,255,0.1)', margin: '0 8px' }} />
+        <div style={{ width: 1, height: 24, background: 'var(--nav-border)', margin: '0 8px' }} />
 
         {/* Logout */}
         <button 

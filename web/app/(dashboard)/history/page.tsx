@@ -146,14 +146,14 @@ export default function HistoryPage() {
         <h1 style={{ fontSize: 32, fontWeight: 800, letterSpacing: '-0.02em', marginBottom: 8 }}>
           Extrato Detalhado
         </h1>
-        <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 16 }}>
+        <p style={{ color: 'var(--text-secondary)', fontSize: 16 }}>
           Acompanhe cada entrada e saída de forma inteligente.
         </p>
       </div>
 
       {/* Barra de Ferramentas / Filtros */}
       <div style={{ 
-        background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)',
+        background: 'var(--bg-surface)', border: '1px solid var(--border-color)',
         borderRadius: 4, padding: '16px 24px', marginBottom: 32,
         display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 24,
         justifyContent: 'space-between'
@@ -163,7 +163,7 @@ export default function HistoryPage() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <button 
             onClick={() => setSelectedMonth(prev => prev > 0 ? prev - 1 : 11)}
-            style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.3)', cursor: 'pointer' }}
+            style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer' }}
           >
             <ChevronLeft size={20} />
           </button>
@@ -174,7 +174,7 @@ export default function HistoryPage() {
           </div>
           <button 
             onClick={() => setSelectedMonth(prev => prev < 11 ? prev + 1 : 0)}
-            style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.3)', cursor: 'pointer' }}
+            style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer' }}
           >
             <ChevronRight size={20} />
           </button>
@@ -184,10 +184,10 @@ export default function HistoryPage() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, flex: 1, maxWidth: 600 }}>
           <div style={{ 
             position: 'relative', flex: 1, 
-            background: 'rgba(255,255,255,0.03)', borderRadius: 4,
-            border: '1px solid rgba(255,255,255,0.05)'
+            background: 'var(--bg-surface)', borderRadius: 4,
+            border: '1px solid var(--border-color)'
           }}>
-            <Search size={16} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.3)' }} />
+            <Search size={16} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)' }} />
             <input 
               type="text" 
               placeholder="Buscar por nome ou banco..."
@@ -195,7 +195,7 @@ export default function HistoryPage() {
               onChange={(e) => setSearchQuery(e.target.value)}
               style={{ 
                 width: '100%', padding: '12px 12px 12px 42px', background: 'none', border: 'none',
-                color: '#fff', fontSize: 13, outline: 'none'
+                color: 'var(--text-primary)', fontSize: 13, outline: 'none'
               }}
             />
           </div>
@@ -205,9 +205,9 @@ export default function HistoryPage() {
               onClick={() => setShowFilterMenu(!showFilterMenu)}
               style={{ 
                 display: 'flex', alignItems: 'center', gap: 8, padding: '12px 20px',
-                background: showFilterMenu ? 'rgba(59, 130, 246, 0.1)' : 'rgba(255,255,255,0.03)', 
-                border: showFilterMenu ? '1px solid rgba(59, 130, 246, 0.3)' : '1px solid rgba(255,255,255,0.05)',
-                borderRadius: 4, color: showFilterMenu ? '#3b82f6' : 'rgba(255,255,255,0.6)', 
+                background: showFilterMenu ? 'rgba(59, 130, 246, 0.1)' : 'var(--bg-surface)', 
+                border: showFilterMenu ? '1px solid rgba(59, 130, 246, 0.3)' : '1px solid var(--border-color)',
+                borderRadius: 4, color: showFilterMenu ? '#3b82f6' : 'var(--text-secondary)', 
                 fontWeight: 700, fontSize: 12, cursor: 'pointer', transition: 'all 0.2s',
                 letterSpacing: '0.05em'
               }}
@@ -225,12 +225,12 @@ export default function HistoryPage() {
                   exit={{ opacity: 0, y: 10 }}
                   style={{
                     position: 'absolute', top: '100%', right: 0, marginTop: 8,
-                    width: 200, background: '#0a1224', border: '1px solid rgba(255,255,255,0.08)',
+                    width: 200, background: 'var(--bg-primary)', border: '1px solid var(--border-color)',
                     borderRadius: 4, padding: '12px 8px', zIndex: 100,
-                    boxShadow: '0 20px 40px rgba(0,0,0,0.4)', backdropFilter: 'blur(10px)'
+                    boxShadow: 'var(--shadow-lg)', backdropFilter: 'blur(10px)'
                   }}
                 >
-                  <p style={{ fontSize: 9, fontWeight: 800, color: 'rgba(255,255,255,0.2)', padding: '0 12px 8px', letterSpacing: '0.05em' }}>
+                  <p style={{ fontSize: 9, fontWeight: 800, color: 'var(--text-secondary)', padding: '0 12px 8px', letterSpacing: '0.05em' }}>
                     ORDENAR POR
                   </p>
                   {[
@@ -244,11 +244,11 @@ export default function HistoryPage() {
                       onClick={() => { setSortBy(option.id); setShowFilterMenu(false); }}
                       style={{
                         width: '100%', padding: '10px 12px', background: sortBy === option.id ? 'rgba(59,130,246,0.1)' : 'none',
-                        border: 'none', borderRadius: 4, color: sortBy === option.id ? '#3b82f6' : '#fff',
+                        border: 'none', borderRadius: 4, color: sortBy === option.id ? '#3b82f6' : 'var(--text-primary)',
                         fontSize: 12, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 10,
                         cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s'
                       }}
-                      onMouseEnter={(e) => { if (sortBy !== option.id) e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; }}
+                      onMouseEnter={(e) => { if (sortBy !== option.id) e.currentTarget.style.background = 'var(--bg-surface)'; }}
                       onMouseLeave={(e) => { if (sortBy !== option.id) e.currentTarget.style.background = 'none'; }}
                     >
                       <option.icon size={14} />
@@ -256,9 +256,9 @@ export default function HistoryPage() {
                     </button>
                   ))}
                   
-                  <div style={{ margin: '8px 0', borderTop: '1px solid rgba(255,255,255,0.05)' }} />
+                  <div style={{ margin: '8px 0', borderTop: '1px solid var(--border-color)' }} />
                   
-                  <p style={{ fontSize: 9, fontWeight: 800, color: 'rgba(255,255,255,0.2)', padding: '8px 12px', letterSpacing: '0.05em' }}>
+                  <p style={{ fontSize: 9, fontWeight: 800, color: 'var(--text-secondary)', padding: '8px 12px', letterSpacing: '0.05em' }}>
                     PERÍODO CUSTOMIZADO
                   </p>
 
@@ -270,8 +270,8 @@ export default function HistoryPage() {
                         value={startDate}
                         onChange={(e) => setStartDate(e.target.value)}
                         style={{ 
-                          width: '100%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
-                          borderRadius: 4, color: '#fff', fontSize: 11, padding: '6px 8px', outline: 'none'
+                          width: '100%', background: 'var(--bg-surface)', border: '1px solid var(--border-color)',
+                          borderRadius: 4, color: 'var(--text-primary)', fontSize: 11, padding: '6px 8px', outline: 'none'
                         }}
                       />
                     </div>
@@ -282,8 +282,8 @@ export default function HistoryPage() {
                         value={endDate}
                         onChange={(e) => setEndDate(e.target.value)}
                         style={{ 
-                          width: '100%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
-                          borderRadius: 4, color: '#fff', fontSize: 11, padding: '6px 8px', outline: 'none'
+                          width: '100%', background: 'var(--bg-surface)', border: '1px solid var(--border-color)',
+                          borderRadius: 4, color: 'var(--text-primary)', fontSize: 11, padding: '6px 8px', outline: 'none'
                         }}
                       />
                     </div>
@@ -298,7 +298,7 @@ export default function HistoryPage() {
                         }
                       }}
                       style={{
-                        width: '100%', padding: '8px', background: isCustomDateActive ? '#3b82f6' : 'rgba(255,255,255,0.1)',
+                        width: '100%', padding: '8px', background: isCustomDateActive ? '#3b82f6' : 'var(--bg-card)',
                         border: 'none', borderRadius: 4, color: '#fff', fontSize: 11, fontWeight: 800,
                         cursor: 'pointer', transition: 'all 0.2s'
                       }}
@@ -341,13 +341,13 @@ export default function HistoryPage() {
       <div style={{ overflowX: 'auto' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
           <thead>
-            <tr style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em' }}>
-              <th style={{ padding: '16px 20px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>STATUS</th>
-              <th style={{ padding: '16px 20px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>DESCRIÇÃO</th>
-              <th style={{ padding: '16px 20px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>BANCO</th>
-              <th style={{ padding: '16px 20px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>DATA</th>
-              <th style={{ padding: '16px 20px', borderBottom: '1px solid rgba(255,255,255,0.05)', textAlign: 'right' }}>VALOR</th>
-              <th style={{ padding: '16px 20px', borderBottom: '1px solid rgba(255,255,255,0.05)', textAlign: 'center' }}>NOTA</th>
+            <tr style={{ color: 'var(--text-secondary)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em' }}>
+              <th style={{ padding: '16px 20px', borderBottom: '1px solid var(--border-color)' }}>STATUS</th>
+              <th style={{ padding: '16px 20px', borderBottom: '1px solid var(--border-color)' }}>DESCRIÇÃO</th>
+              <th style={{ padding: '16px 20px', borderBottom: '1px solid var(--border-color)' }}>BANCO</th>
+              <th style={{ padding: '16px 20px', borderBottom: '1px solid var(--border-color)' }}>DATA</th>
+              <th style={{ padding: '16px 20px', borderBottom: '1px solid var(--border-color)', textAlign: 'right' }}>VALOR</th>
+              <th style={{ padding: '16px 20px', borderBottom: '1px solid var(--border-color)', textAlign: 'center' }}>NOTA</th>
             </tr>
           </thead>
           <tbody>
@@ -363,7 +363,7 @@ export default function HistoryPage() {
                       >
                         <Loader2 size={32} />
                       </motion.div>
-                      <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', fontWeight: 700, letterSpacing: '0.1em' }}>
+                      <span style={{ fontSize: 13, color: 'var(--text-secondary)', fontWeight: 700, letterSpacing: '0.1em' }}>
                         SINCRONIZANDO DADOS REAIS...
                       </span>
                     </div>
@@ -382,12 +382,12 @@ export default function HistoryPage() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.98 }}
                   style={{ 
-                    borderBottom: '1px solid rgba(255,255,255,0.03)',
-                    background: 'rgba(255,255,255,0.01)',
+                    borderBottom: '1px solid var(--border-color)',
+                    background: 'var(--bg-card)',
                     transition: 'background 0.2s'
                   }}
-                  onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.03)'}
-                  onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.01)'}
+                  onMouseEnter={(e) => e.currentTarget.style.background = 'var(--bg-surface)'}
+                  onMouseLeave={(e) => e.currentTarget.style.background = 'var(--bg-card)'}
                 >
                   <td style={{ padding: '20px' }}>
                     {t.amount > 0 ? (
@@ -402,7 +402,7 @@ export default function HistoryPage() {
                   </td>
                   <td style={{ padding: '20px' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                      <div style={{ color: '#fff', fontSize: 14, fontWeight: 600 }}>{t.description}</div>
+                      <div style={{ color: 'var(--text-primary)', fontSize: 14, fontWeight: 600 }}>{t.description}</div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                         <span style={{ 
                           fontSize: 10, padding: '2px 6px', borderRadius: 4, 
@@ -412,8 +412,8 @@ export default function HistoryPage() {
                         }}>
                           {t.accountType === 'CREDIT' ? 'CRÉDITO' : 'DÉBITO'}
                         </span>
-                        <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>•</span>
-                        <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', fontWeight: 500 }}>{t.bank || 'Banco'}</span>
+                        <span style={{ fontSize: 11, color: 'var(--text-secondary)' }}>•</span>
+                        <span style={{ fontSize: 11, color: 'var(--text-secondary)', fontWeight: 500 }}>{t.bank || 'Banco'}</span>
                       </div>
                     </div>
                   </td>
@@ -429,14 +429,14 @@ export default function HistoryPage() {
                     </div>
                   </td>
                   <td style={{ padding: '20px' }}>
-                    <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', fontWeight: 500 }}>
+                    <div style={{ fontSize: 13, color: 'var(--text-secondary)', fontWeight: 500 }}>
                       {new Date(t.date).toLocaleDateString('pt-BR')}
                     </div>
                   </td>
                   <td style={{ padding: '20px', textAlign: 'right' }}>
                     <div style={{ 
                       fontSize: 15, fontWeight: 700, 
-                      color: t.amount > 0 ? '#22c55e' : '#fff',
+                      color: t.amount > 0 ? '#22c55e' : 'var(--text-primary)',
                       transition: 'all 0.3s ease'
                     }}>
                       {t.amount > 0 ? `+ ` : `- `}
@@ -448,7 +448,7 @@ export default function HistoryPage() {
                       onClick={() => openNoteModal(t)}
                       style={{ 
                         background: 'none', border: 'none', cursor: 'pointer',
-                        color: t.note ? '#3b82f6' : 'rgba(255,255,255,0.1)',
+                        color: t.note ? '#3b82f6' : 'var(--border-color)',
                         transition: 'color 0.2s'
                       }}
                     >
@@ -462,7 +462,7 @@ export default function HistoryPage() {
         </table>
 
         {filteredTransactions.length === 0 && (
-          <div style={{ padding: '80px 0', textAlign: 'center', color: 'rgba(255,255,255,0.2)' }}>
+          <div style={{ padding: '80px 0', textAlign: 'center', color: 'var(--text-secondary)' }}>
              Nenhuma transação encontrada para este período.
           </div>
         )}
@@ -481,15 +481,15 @@ export default function HistoryPage() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               style={{ 
-                width: '100%', maxWidth: 450, background: '#0a1224',
-                border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8,
-                padding: '32px', boxShadow: '0 40px 100px rgba(0,0,0,0.5)'
+                width: '100%', maxWidth: 450, background: 'var(--bg-primary)',
+                border: '1px solid var(--border-color)', borderRadius: 8,
+                padding: '32px', boxShadow: 'var(--shadow-lg)'
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
                 <div>
-                  <h3 style={{ fontSize: 18, fontWeight: 800, color: '#fff', marginBottom: 4 }}>Adicionar Nota</h3>
-                  <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>{selectedTransaction?.description}</p>
+                  <h3 style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-primary)', marginBottom: 4 }}>Adicionar Nota</h3>
+                  <p style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{selectedTransaction?.description}</p>
                 </div>
                 <button 
                   onClick={() => setShowNoteModal(false)}
@@ -504,9 +504,9 @@ export default function HistoryPage() {
                 onChange={(e) => setNoteContent(e.target.value)}
                 placeholder="Escreva aqui sua observação sobre esta compra..."
                 style={{ 
-                  width: '100%', height: 160, background: 'rgba(255,255,255,0.02)',
-                  border: '1px solid rgba(255,255,255,0.1)', borderRadius: 4,
-                  padding: 16, color: '#fff', fontSize: 14, outline: 'none',
+                  width: '100%', height: 160, background: 'var(--bg-surface)',
+                  border: '1px solid var(--border-color)', borderRadius: 4,
+                  padding: 16, color: 'var(--text-primary)', fontSize: 14, outline: 'none',
                   resize: 'none', marginBottom: 24, boxSizing: 'border-box'
                 }}
               />
@@ -515,8 +515,8 @@ export default function HistoryPage() {
                 <button 
                   onClick={() => setShowNoteModal(false)}
                   style={{ 
-                    flex: 1, padding: '14px', borderRadius: 4, border: '1px solid #fff',
-                    background: 'none', color: '#fff', fontWeight: 700, cursor: 'pointer',
+                    flex: 1, padding: '14px', borderRadius: 4, border: '1px solid var(--text-primary)',
+                    background: 'none', color: 'var(--text-primary)', fontWeight: 700, cursor: 'pointer',
                     boxSizing: 'border-box'
                   }}
                 >

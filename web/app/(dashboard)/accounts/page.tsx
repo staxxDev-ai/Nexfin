@@ -58,11 +58,11 @@ function InstitutionCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       style={{
-        background: 'rgba(255,255,255,0.03)',
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-color)',
         borderRadius: 20,
         overflow: 'hidden',
-        boxShadow: '0 20px 50px rgba(0,0,0,0.2)',
+        boxShadow: 'var(--shadow-md)',
         display: 'flex',
         flexDirection: 'column'
       }}
@@ -70,8 +70,8 @@ function InstitutionCard({
       {/* ── Cabeçalho do Banco ── */}
       <div style={{ 
         padding: '24px', 
-        background: 'rgba(255,255,255,0.02)',
-        borderBottom: '1px solid rgba(255,255,255,0.05)',
+        background: 'var(--bg-surface)',
+        borderBottom: '1px solid var(--border-color)',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center'
@@ -98,7 +98,7 @@ function InstitutionCard({
             </div>
           </div>
           <div>
-            <div style={{ fontWeight: 800, fontSize: 18, letterSpacing: '-0.01em' }}>{group.name}</div>
+            <div style={{ fontWeight: 800, fontSize: 18, letterSpacing: '-0.01em', color: 'var(--text-primary)' }}>{group.name}</div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 4 }}>
               <span style={{ fontSize: 11, color: anyConnected ? '#22c55e' : '#ef4444', fontWeight: 700, letterSpacing: '0.02em' }}>
                 {anyConnected ? 'CONECTADO' : 'DESCONECTADO'}
@@ -111,12 +111,12 @@ function InstitutionCard({
           onClick={() => onSettings(group.itemId)}
           style={{
             display: 'flex', alignItems: 'center', gap: 8, padding: '10px 16px',
-            background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
-            borderRadius: 10, color: 'rgba(255,255,255,0.6)', fontSize: 13, fontWeight: 600, cursor: 'pointer',
+            background: 'var(--bg-surface)', border: '1px solid var(--border-color)',
+            borderRadius: 10, color: 'var(--text-secondary)', fontSize: 13, fontWeight: 600, cursor: 'pointer',
             transition: 'all 0.2s'
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.08)')}
-          onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.05)')}
+          onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--border-color)')}
+          onMouseLeave={(e) => (e.currentTarget.style.background = 'var(--bg-surface)')}
         >
           <Settings2 size={15} />
           Ajustar
@@ -137,18 +137,18 @@ function InstitutionCard({
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                borderBottom: idx === group.accounts.length - 1 ? 'none' : '1px solid rgba(255,255,255,0.03)'
+                borderBottom: idx === group.accounts.length - 1 ? 'none' : '1px solid var(--border-color)'
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-                <div style={{ color: 'rgba(255,255,255,0.3)' }}>
+                <div style={{ color: 'var(--text-secondary)' }}>
                   <Icon size={18} />
                 </div>
                 <div>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.9)' }}>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>
                     {ACCOUNT_TYPE_LABELS[acc.accountType]?.label}
                   </div>
-                  <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', marginTop: 2 }}>
+                  <div style={{ fontSize: 11, color: 'var(--text-secondary)', marginTop: 2 }}>
                     {acc.accountNumber ? `Final ${acc.accountNumber.slice(-4)}` : 'Conta Protegida'}
                   </div>
                 </div>
@@ -156,7 +156,7 @@ function InstitutionCard({
               <div style={{ 
                 fontSize: 16, 
                 fontWeight: 700, 
-                color: acc.balance >= 0 ? '#fff' : '#ef4444',
+                color: acc.balance >= 0 ? 'var(--text-primary)' : '#ef4444',
                 transition: 'all 0.3s ease'
               }}>
                 {maskValue(formattedValue, isPrivate)}
@@ -169,13 +169,13 @@ function InstitutionCard({
       {/* ── Rodapé (Saldo Consolidado) ── */}
       <div style={{ 
         padding: '20px 24px', 
-        background: 'rgba(255,255,255,0.015)',
-        borderTop: '1px solid rgba(255,255,255,0.05)',
+        background: 'var(--bg-surface)',
+        borderTop: '1px solid var(--border-color)',
         marginTop: 'auto'
       }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
           <div>
-            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', fontWeight: 800, letterSpacing: '0.1em', marginBottom: 4 }}>
+            <div style={{ fontSize: 10, color: 'var(--text-secondary)', fontWeight: 800, letterSpacing: '0.1em', marginBottom: 4 }}>
               SALDO CONSOLIDADO
             </div>
             <div style={{ 
@@ -399,9 +399,9 @@ export default function AccountsPage() {
             <h1 style={{ fontSize: 36, fontWeight: 900, margin: 0, letterSpacing: '-0.03em' }}>
               Minhas Conexões
             </h1>
-            <p style={{ margin: '12px 0 0', color: 'rgba(255,255,255,0.4)', fontSize: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
+            <p style={{ margin: '12px 0 0', color: 'var(--text-secondary)', fontSize: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
               {groupedAccounts.length} instituições ativas 
-              <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'rgba(255,255,255,0.2)' }} />
+              <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--border-color)' }} />
               <span style={{ color: 'rgba(34,197,94,0.6)', fontWeight: 600 }}>Sincronização Automática Ativa</span>
             </p>
           </div>
@@ -426,7 +426,7 @@ export default function AccountsPage() {
         {loadingAccounts ? (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 20, padding: '120px 0' }}>
             <Loader2 size={32} color="#3b82f6" style={{ animation: 'spin 1.5s linear infinite' }} />
-            <span style={{ color: 'rgba(255,255,255,0.4)', fontWeight: 600, fontSize: 15 }}>Preparando sua carteira...</span>
+            <span style={{ color: 'var(--text-secondary)', fontWeight: 600, fontSize: 15 }}>Preparando sua carteira...</span>
           </div>
         ) : groupedAccounts.length === 0 ? (
           <motion.div
@@ -452,12 +452,12 @@ export default function AccountsPage() {
             <button
               onClick={() => setShowSetup(true)}
               style={{
-                padding: '16px 40px', background: 'rgba(255,255,255,0.05)',
-                border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, color: '#fff', 
+                padding: '16px 40px', background: 'var(--bg-surface)',
+                border: '1px solid var(--border-color)', borderRadius: 12, color: 'var(--text-primary)', 
                 fontWeight: 700, cursor: 'pointer', transition: 'all 0.2s'
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.08)')}
-              onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.05)')}
+              onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--border-color)')}
+              onMouseLeave={(e) => (e.currentTarget.style.background = 'var(--bg-surface)')}
             >
               CONECTAR PRIMEIRO BANCO
             </button>
@@ -489,19 +489,19 @@ export default function AccountsPage() {
                 exit={{ scale: 0.95, y: 30 }}
                 style={{
                   width: '100%', maxWidth: 480,
-                  background: '#0b1426',
-                  border: '1px solid rgba(255,255,255,0.1)',
+                  background: 'var(--bg-primary)',
+                  border: '1px solid var(--border-color)',
                   borderRadius: 24, padding: '40px',
                   position: 'relative',
-                  boxShadow: '0 30px 100px rgba(0,0,0,0.5)'
+                  boxShadow: 'var(--shadow-lg)'
                 }}
               >
                 <button
                   onClick={handleCloseSetup}
                   style={{
                     position: 'absolute', top: 20, right: 20,
-                    background: 'rgba(255,255,255,0.06)', border: 'none',
-                    borderRadius: 10, padding: 8, cursor: 'pointer', color: 'rgba(255,255,255,0.5)',
+                    background: 'var(--bg-surface)', border: 'none',
+                    borderRadius: 10, padding: 8, cursor: 'pointer', color: 'var(--text-secondary)',
                     display: 'flex',
                   }}
                 >
@@ -516,8 +516,8 @@ export default function AccountsPage() {
                         <Zap size={24} color="#3b82f6" />
                       </div>
                       <div>
-                        <h2 style={{ fontSize: 22, fontWeight: 900, margin: 0, letterSpacing: '-0.02em' }}>Ativar Open Finance</h2>
-                        <p style={{ margin: 0, fontSize: 13, color: 'rgba(255,255,255,0.4)', fontWeight: 600 }}>SEGURO • AUTOMÁTICO • PREMIUM</p>
+                        <h2 style={{ fontSize: 22, fontWeight: 900, margin: 0, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>Ativar Open Finance</h2>
+                        <p style={{ margin: 0, fontSize: 13, color: 'var(--text-secondary)', fontWeight: 600 }}>SEGURO • AUTOMÁTICO • PREMIUM</p>
                       </div>
                     </div>
 
@@ -529,7 +529,7 @@ export default function AccountsPage() {
                       ].map(({ text }, idx) => (
                         <div key={idx} style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
                           <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#3b82f6' }} />
-                          <span style={{ fontSize: 15, color: 'rgba(255,255,255,0.7)', fontWeight: 500 }}>{text}</span>
+                          <span style={{ fontSize: 15, color: 'var(--text-secondary)', fontWeight: 500 }}>{text}</span>
                         </div>
                       ))}
                     </div>
@@ -549,27 +549,27 @@ export default function AccountsPage() {
 
                 {step === 2 && (
                   <div>
-                     <div style={{ marginBottom: 32 }}>
-                        <h2 style={{ fontSize: 22, fontWeight: 900, margin: 0 }}>Credenciais</h2>
-                        <p style={{ margin: '4px 0 0', fontSize: 14, color: 'rgba(255,255,255,0.4)' }}>Insira suas chaves da API Pluggy</p>
-                     </div>
+                      <div style={{ marginBottom: 32 }}>
+                        <h2 style={{ fontSize: 22, fontWeight: 900, margin: 0, color: 'var(--text-primary)' }}>Credenciais</h2>
+                        <p style={{ margin: '4px 0 0', fontSize: 14, color: 'var(--text-secondary)' }}>Insira suas chaves da API Pluggy</p>
+                      </div>
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 20, marginBottom: 32 }}>
                       <div>
-                        <label style={{ display: 'block', fontSize: 11, fontWeight: 800, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.1em', marginBottom: 8 }}>CLIENT ID</label>
+                        <label style={{ display: 'block', fontSize: 11, fontWeight: 800, color: 'var(--text-secondary)', letterSpacing: '0.1em', marginBottom: 8 }}>CLIENT ID</label>
                         <input
                           value={creds.clientId}
                           onChange={e => setCreds(p => ({ ...p, clientId: e.target.value }))}
                           placeholder="ID da sua aplicação"
                           style={{
                             width: '100%', boxSizing: 'border-box', padding: '16px',
-                            background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
-                            borderRadius: 12, color: '#fff', fontSize: 14, outline: 'none', fontFamily: 'monospace'
+                            background: 'var(--bg-surface)', border: '1px solid var(--border-color)',
+                            borderRadius: 12, color: 'var(--text-primary)', fontSize: 14, outline: 'none', fontFamily: 'monospace'
                           }}
                         />
                       </div>
                       <div>
-                        <label style={{ display: 'block', fontSize: 11, fontWeight: 800, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.1em', marginBottom: 8 }}>CLIENT SECRET</label>
+                        <label style={{ display: 'block', fontSize: 11, fontWeight: 800, color: 'var(--text-secondary)', letterSpacing: '0.1em', marginBottom: 8 }}>CLIENT SECRET</label>
                         <input
                           value={creds.clientSecret}
                           onChange={e => setCreds(p => ({ ...p, clientSecret: e.target.value }))}
@@ -577,8 +577,8 @@ export default function AccountsPage() {
                           placeholder="Sua chave secreta"
                           style={{
                             width: '100%', boxSizing: 'border-box', padding: '16px',
-                            background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
-                            borderRadius: 12, color: '#fff', fontSize: 14, outline: 'none', fontFamily: 'monospace'
+                            background: 'var(--bg-surface)', border: '1px solid var(--border-color)',
+                            borderRadius: 12, color: 'var(--text-primary)', fontSize: 14, outline: 'none', fontFamily: 'monospace'
                           }}
                         />
                       </div>
@@ -608,8 +608,8 @@ export default function AccountsPage() {
                     <div style={{ width: 70, height: 70, borderRadius: '50%', background: 'rgba(34,197,94,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
                       <CheckCircle2 size={36} color="#22c55e" />
                     </div>
-                    <h2 style={{ fontSize: 24, fontWeight: 900, marginBottom: 8 }}>Tudo Certo!</h2>
-                    <p style={{ color: 'rgba(255,255,255,0.5)', marginBottom: 32, fontSize: 15 }}>Chaves validadas. Agora selecione seu banco.</p>
+                    <h2 style={{ fontSize: 24, fontWeight: 900, marginBottom: 8, color: 'var(--text-primary)' }}>Tudo Certo!</h2>
+                    <p style={{ color: 'var(--text-secondary)', marginBottom: 32, fontSize: 15 }}>Chaves validadas. Agora selecione seu banco.</p>
 
                     <button
                       onClick={handleOpenWidget}
@@ -637,8 +637,8 @@ export default function AccountsPage() {
                     <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} style={{ width: 80, height: 80, borderRadius: '50%', background: 'rgba(34,197,94,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
                       <CheckCircle2 size={44} color="#22c55e" />
                     </motion.div>
-                    <h2 style={{ fontSize: 26, fontWeight: 900, marginBottom: 12 }}>Banco Conectado!</h2>
-                    <p style={{ color: 'rgba(255,255,255,0.4)', marginBottom: 0, fontSize: 16 }}>Suas contas serão unificadas no dashboard.</p>
+                    <h2 style={{ fontSize: 26, fontWeight: 900, marginBottom: 12, color: 'var(--text-primary)' }}>Banco Conectado!</h2>
+                    <p style={{ color: 'var(--text-secondary)', marginBottom: 0, fontSize: 16 }}>Suas contas serão unificadas no dashboard.</p>
                   </div>
                 )}
 

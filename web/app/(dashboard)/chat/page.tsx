@@ -240,15 +240,15 @@ export default function ChatPage() {
       <motion.div 
         animate={{ width: isSidebarOpen ? 280 : 0 }}
         style={{ 
-          background: 'rgba(2, 6, 23, 0.4)',
-          borderRight: '1px solid rgba(255,255,255,0.05)',
+          background: 'var(--bg-card)',
+          borderRight: '1px solid var(--border-color)',
           overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column',
           position: 'relative'
         }}
       >
-        <div style={{ padding: '24px 16px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+        <div style={{ padding: '24px 16px', borderBottom: '1px solid var(--border-color)' }}>
           <button 
             onClick={startNewChat}
             style={{
@@ -270,16 +270,16 @@ export default function ChatPage() {
               onClick={() => loadThread(t.id)}
               style={{
                 padding: '12px 14px', borderRadius: '10px', marginBottom: 4,
-                background: currentThreadId === t.id ? 'rgba(37,99,235,0.1)' : 'transparent',
-                border: `1px solid ${currentThreadId === t.id ? 'rgba(37,99,235,0.2)' : 'transparent'}`,
+                background: currentThreadId === t.id ? 'var(--bg-surface)' : 'transparent',
+                border: `1px solid ${currentThreadId === t.id ? 'var(--border-color)' : 'transparent'}`,
                 cursor: 'pointer', position: 'relative', transition: 'all 0.2s',
                 display: 'flex', alignItems: 'center', gap: 12
               }}
             >
-              <MessageSquare size={16} color={currentThreadId === t.id ? '#60a5fa' : 'rgba(255,255,255,0.4)'} />
+              <MessageSquare size={16} color={currentThreadId === t.id ? 'var(--accent-primary)' : 'var(--text-secondary)'} />
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ 
-                  fontSize: 13, color: currentThreadId === t.id ? '#fff' : 'rgba(255,255,255,0.7)',
+                  fontSize: 13, color: currentThreadId === t.id ? 'var(--text-primary)' : 'var(--text-secondary)',
                   fontWeight: currentThreadId === t.id ? 600 : 400,
                   whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'
                 }}>
@@ -306,8 +306,8 @@ export default function ChatPage() {
         style={{
           position: 'absolute', left: isSidebarOpen ? 268 : 12, top: '50%', transform: 'translateY(-50%)',
           zIndex: 100, width: 24, height: 48, borderRadius: '0 8px 8px 0',
-          background: 'rgba(2, 6, 23, 0.8)', border: '1px solid rgba(255,255,255,0.1)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.5)',
+          background: 'var(--bg-primary)', border: '1px solid var(--border-color)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)',
           cursor: 'pointer', transition: 'all 0.3s'
         }}
       >
@@ -319,7 +319,7 @@ export default function ChatPage() {
         
         {/* Header */}
         <div style={{ 
-          padding: '20px 0', borderBottom: '1px solid rgba(255,255,255,0.05)', 
+          padding: '20px 0', borderBottom: '1px solid var(--border-color)', 
           display: 'flex', justifyContent: 'space-between', alignItems: 'center' 
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
@@ -335,7 +335,7 @@ export default function ChatPage() {
                 <h2 style={{ fontSize: 18, fontWeight: 700 }}>NEXFIN AI</h2>
                 {isGeminiActive && <Zap size={12} fill="#4ade80" color="#4ade80" />}
               </div>
-              <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>Consultoria Master • {messages.length} Mensagens</p>
+              <p style={{ fontSize: 12, color: 'var(--text-secondary)' }}>Consultoria Master • {messages.length} Mensagens</p>
             </div>
           </div>
         </div>
@@ -357,8 +357,8 @@ export default function ChatPage() {
                   textAlign: 'center' 
                 }}
               >
-                <Sparkles size={48} color="#2563eb" style={{ marginBottom: 20 }} />
-                <h3 style={{ fontSize: 18, fontWeight: 600, color: '#fff' }}>Como posso ajudar hoje?</h3>
+                <Sparkles size={48} color="var(--accent-primary)" style={{ marginBottom: 20 }} />
+                <h3 style={{ fontSize: 18, fontWeight: 600, color: 'var(--text-primary)' }}>Como posso ajudar hoje?</h3>
                 <p style={{ fontSize: 14, marginTop: 8 }}>Pergunte sobre seus saldos, investimentos ou runway.</p>
               </motion.div>
             )}
@@ -376,20 +376,20 @@ export default function ChatPage() {
               >
                 <div style={{ 
                   width: 32, height: 32, borderRadius: '10px', 
-                  background: msg.role === 'user' ? 'rgba(255,255,255,0.05)' : 'rgba(37,99,235,0.1)',
+                  background: msg.role === 'user' ? 'var(--bg-surface)' : 'var(--bg-surface)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-                  border: '1px solid rgba(255,255,255,0.08)'
+                  border: '1px solid var(--border-color)'
                 }}>
-                  {msg.role === 'user' ? <User size={16} /> : <Sparkles size={16} color="#60a5fa" />}
+                  {msg.role === 'user' ? <User size={16} /> : <Sparkles size={16} color="var(--accent-primary)" />}
                 </div>
                 <div style={{
                   padding: '12px 18px', borderRadius: '18px',
-                  background: msg.role === 'user' ? 'rgba(37,99,235,0.15)' : 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                  color: '#fff', fontSize: 15, lineHeight: 1.6, whiteSpace: 'pre-wrap'
+                  background: msg.role === 'user' ? 'var(--bg-card)' : 'var(--bg-surface)',
+                  border: '1px solid var(--border-color)',
+                  color: 'var(--text-primary)', fontSize: 15, lineHeight: 1.6, whiteSpace: 'pre-wrap'
                 }}>
                   {msg.content}
-                  <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.2)', marginTop: 6 }}>
+                  <div style={{ fontSize: 10, color: 'var(--text-secondary)', marginTop: 6 }}>
                     {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </div>
                 </div>
@@ -398,13 +398,13 @@ export default function ChatPage() {
             
             {isLoading && (
               <div style={{ display: 'flex', gap: 16, alignSelf: 'flex-start' }}>
-                <div style={{ width: 32, height: 32, borderRadius: '10px', background: 'rgba(37,99,235,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Bot size={16} color="#60a5fa" className="animate-pulse" />
+                <div style={{ width: 32, height: 32, borderRadius: '10px', background: 'var(--bg-surface)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Bot size={16} color="var(--accent-primary)" className="animate-pulse" />
                 </div>
-                <div style={{ padding: '12px 18px', borderRadius: '18px', background: 'rgba(255,255,255,0.02)', display: 'flex', gap: 4 }}>
-                  <motion.div animate={{ scale: [1, 1.5, 1] }} transition={{ repeat: Infinity, duration: 1 }} style={{ width: 3, height: 3, borderRadius: '50%', background: '#60a5fa' }} />
-                  <motion.div animate={{ scale: [1, 1.5, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0.2 }} style={{ width: 3, height: 3, borderRadius: '50%', background: '#60a5fa' }} />
-                  <motion.div animate={{ scale: [1, 1.5, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0.4 }} style={{ width: 3, height: 3, borderRadius: '50%', background: '#60a5fa' }} />
+                <div style={{ padding: '12px 18px', borderRadius: '18px', background: 'var(--bg-surface)', display: 'flex', gap: 4 }}>
+                  <motion.div animate={{ scale: [1, 1.5, 1] }} transition={{ repeat: Infinity, duration: 1 }} style={{ width: 3, height: 3, borderRadius: '50%', background: 'var(--accent-primary)' }} />
+                  <motion.div animate={{ scale: [1, 1.5, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0.2 }} style={{ width: 3, height: 3, borderRadius: '50%', background: 'var(--accent-primary)' }} />
+                  <motion.div animate={{ scale: [1, 1.5, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0.4 }} style={{ width: 3, height: 3, borderRadius: '50%', background: 'var(--accent-primary)' }} />
                 </div>
               </div>
             )}
@@ -413,15 +413,15 @@ export default function ChatPage() {
         </div>
 
         {/* Input Bar - FIXED DESIGN */}
-        <div style={{ padding: '24px 0', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+        <div style={{ padding: '24px 0', borderTop: '1px solid var(--border-color)' }}>
           <form 
             onSubmit={handleSendMessage}
             style={{ 
               display: 'flex', 
               gap: 12, 
               alignItems: 'center',
-              background: 'rgba(255,255,255,0.03)',
-              border: '1px solid rgba(255,255,255,0.08)',
+              background: 'var(--bg-surface)',
+              border: '1px solid var(--border-color)',
               borderRadius: '16px',
               padding: '6px 6px 6px 16px',
               boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
@@ -441,7 +441,7 @@ export default function ChatPage() {
               rows={1}
               style={{
                 flex: 1, background: 'none', border: 'none',
-                color: '#fff', fontSize: 16, outline: 'none', resize: 'none',
+                color: 'var(--text-primary)', fontSize: 16, outline: 'none', resize: 'none',
                 padding: '8px 0'
               }}
             />
@@ -460,7 +460,7 @@ export default function ChatPage() {
             </button>
           </form>
           <div style={{ 
-            fontSize: 11, color: 'rgba(255,255,255,0.3)', textAlign: 'center', marginTop: 12,
+            fontSize: 11, color: 'var(--text-secondary)', textAlign: 'center', marginTop: 12,
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6
           }}>
             <Clock size={10} /> O histórico de chat é salvo automaticamente.
